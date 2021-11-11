@@ -1,19 +1,34 @@
+import { useState } from 'react';
+
 import './App.scss';
 import firebase from './db/Firebase';
 import 'firebase/compat/auth';
+import Userlogged from './components/Usuarios/UserLogged';
+import Auth from './components/Auth';
 
 function App() {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log(user);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  firebase.auth().onAuthStateChanged((currentUser) => {
+
+    if (!currentUser) {
+      setUser(null)
     } else {
-      console.log('not logged in');
+      setUser(currentUser)
     }
-  })
+
+    setLoading(false);
+  });
+
+  if (loading) {
+    return null;
+  }
+
   return (
-    <div className="App-header">
-      <h1>App electron + react</h1>
-    </div>
+    !user
+      ? <Auth />
+      : <Userlogged />
   );
 }
 
