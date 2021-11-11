@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import firebase from './db/Firebase';
 import 'firebase/compat/auth';
 
@@ -12,7 +11,7 @@ function App() {
     }
   })
   return (
-    <div className="">
+    <div className="App-header">
       <h1>App electron + react</h1>
     </div>
   );
