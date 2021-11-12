@@ -22,7 +22,7 @@ const Auth = () => {
                 break;
 
             default:
-                return <AuthOptions />
+                return <AuthOptions setSelectedForm={ setSelectedForm } />
                 break;
         }
     }

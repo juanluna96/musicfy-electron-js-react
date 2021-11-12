@@ -1,9 +1,18 @@
 import React from 'react'
+import { Button } from 'semantic-ui-react';
 
-const AuthOptions = () => {
+import './AuthOptions.scss'
+
+const AuthOptions = ({ setSelectedForm }) => {
     return (
-        <div>
-            AuthOptions
+        <div className="auth-options">
+            <h2>Millones de canciones, gratis en MusicFY</h2>
+            <Button className="register" onClick={ () => setSelectedForm('register') }>
+                Registrarte gratis
+            </Button>
+            <Button className="login" onClick={ () => setSelectedForm('login') }>
+                Iniciar Sesion
+            </Button>
         </div>
     )
 }
