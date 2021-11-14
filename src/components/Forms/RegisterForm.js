@@ -5,8 +5,22 @@ import 'firebase/auth';
 
 import './scss/RegisterForm.scss';
 
+const formRegisterDefault = {
+    email: '',
+    password: '',
+    username: ''
+}
+
 const Registerform = ({ setSelectedForm }) => {
+    const [formRegister, setFormRegister] = useState(formRegisterDefault);
     const [error, setError] = useState(false);
+
+    const onChange = (e) => {
+        setFormRegister({
+            ...formRegister,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const onSubmit = () => {
         console.log('Formulario enviado')
@@ -18,20 +32,20 @@ const Registerform = ({ setSelectedForm }) => {
             <form onSubmit={ onSubmit }>
                 <Form.Field>
                     <Input type="text" name="email" placeholder="Correo electronico" icon="mail outline"
-                    // onChange="" error={ error } 
+                        onChange={ onChange } error={ error }
                     />
                 </Form.Field>
                 <Form.Field>
                     <Input type="password" name="password" placeholder="Contraseña" icon="eye"
-                    // onChange="" error={ error } 
+                        onChange={ onChange } error={ error }
                     />
                 </Form.Field>
                 <Form.Field>
                     <Input type="password" name="username" placeholder="¿Como deberiamos llamarte?" icon="user circle outline"
-                    // onChange="" error={ error } 
+                        onChange={ onChange } error={ error }
                     />
                 </Form.Field>
-                <Button type="submit" class="button">Continuar</Button>
+                <Button type="submit" className="button">Continuar</Button>
             </form>
 
             <div className="register-form__options">
