@@ -14,6 +14,7 @@ const formRegisterDefault = {
 const Registerform = ({ setSelectedForm }) => {
     const [formRegister, setFormRegister] = useState(formRegisterDefault);
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onChange = (e) => {
         setFormRegister({
@@ -36,8 +37,11 @@ const Registerform = ({ setSelectedForm }) => {
                     />
                 </Form.Field>
                 <Form.Field>
-                    <Input type="password" name="password" placeholder="Contraseña" icon="eye"
+                    <Input type={ showPassword ? 'text' : 'password' } name="password" placeholder="Contraseña"
                         onChange={ onChange } error={ error }
+                        icon={
+                            <Icon name={ showPassword ? 'eye slash' : 'eye' } link onClick={ () => setShowPassword(!showPassword) } />
+                        }
                     />
                 </Form.Field>
                 <Form.Field>
