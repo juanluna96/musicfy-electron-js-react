@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Icon, Form, Input } from 'semantic-ui-react';
+import { validateEmail } from '../../helpers/Validations';
 import firebase from '../../db/Firebase';
 import 'firebase/auth';
 
@@ -13,8 +14,9 @@ const formRegisterDefault = {
 
 const Registerform = ({ setSelectedForm }) => {
     const [formRegister, setFormRegister] = useState(formRegisterDefault);
-    const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState({});
 
     const onChange = (e) => {
         setFormRegister({
@@ -23,8 +25,40 @@ const Registerform = ({ setSelectedForm }) => {
         })
     }
 
-    const onSubmit = () => {
-        console.log('Formulario enviado')
+    const changePasswordType = () => {
+        setShowPassword(!showPassword);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setError({});
+        let errorsForm = {};
+        let formOk = true;
+
+        setLoading(true);
+
+        if (!validateEmail(formRegister.email)) {
+            errorsForm.email = true;
+            formOk = false;
+        }
+
+        if (formRegister.password.length < 6) {
+            errorsForm.password = true;
+            formOk = false;
+        }
+
+        if (formRegister.username.length < 3) {
+            errorsForm.username = true;
+            formOk = false;
+        }
+
+        if (!formOk) {
+            setError(errorsForm);
+            return;
+        }
+
+
+        validateEmail(formRegister.email)
     }
 
     return (
@@ -33,21 +67,24 @@ const Registerform = ({ setSelectedForm }) => {
             <form onSubmit={ onSubmit }>
                 <Form.Field>
                     <Input type="text" name="email" placeholder="Correo electronico" icon="mail outline"
-                        onChange={ onChange } error={ error }
+                        onChange={ onChange } error={ error.email }
                     />
+                    { error.email && <span>El correo electronico es invalido</span> }
                 </Form.Field>
                 <Form.Field>
                     <Input type={ showPassword ? 'text' : 'password' } name="password" placeholder="Contraseña"
-                        onChange={ onChange } error={ error }
+                        onChange={ onChange } error={ error.password }
                         icon={
-                            <Icon name={ showPassword ? 'eye slash' : 'eye' } link onClick={ () => setShowPassword(!showPassword) } />
+                            <Icon name={ showPassword ? 'eye slash' : 'eye' } link onClick={ () => changePasswordType() } />
                         }
                     />
+                    { error.password && <span>La contraseña debe tener al menos 6 caracteres</span> }
                 </Form.Field>
                 <Form.Field>
                     <Input type="password" name="username" placeholder="¿Como deberiamos llamarte?" icon="user circle outline"
-                        onChange={ onChange } error={ error }
+                        onChange={ onChange } error={ error.username }
                     />
+                    { error.username && <span>El nombre de usuario debe tener al menos 3 caracteres</span> }
                 </Form.Field>
                 <Button type="submit" className="button">Continuar</Button>
             </form>

@@ -31,10 +31,9 @@
                     margin-right: 10px;
                 }
                 &.error {
+                    margin: 4px 0px;
                     input {
-                        background-color: $background-red;
-                        border: 0;
-                        color: $font-red;
+                        border-bottom: 1.8px solid $background-red;
                         &:hover,
                         &:focus,
                         &:active {
@@ -44,6 +43,12 @@
                         }
                     }
                 }
+            }
+            span {
+                color: $background-red;
+                font-size: 12px;
+                font-weight: bold;
+                margin-left: 10px;
             }
         }
         .button {
