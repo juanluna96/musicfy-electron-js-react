@@ -6,7 +6,7 @@ import './AuthOptions.scss'
 const AuthOptions = ({ setSelectedForm }) => {
     return (
         <div className="auth-options">
-            <h2>Millones de canciones, gratis en MusicFY</h2>
+            <h2>Millones de canciones, gratis en Musicfy</h2>
             <Button className="register" onClick={ () => setSelectedForm('register') }>
                 Registrarte gratis
             </Button>

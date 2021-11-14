@@ -18,7 +18,7 @@ const Auth = () => {
                 break;
 
             case 'register':
-                return <Registerform />
+                return <Registerform setSelectedForm={ setSelectedForm } />
                 break;
 
             default:
