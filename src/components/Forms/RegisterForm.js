@@ -3,6 +3,7 @@ import { Button, Icon, Form, Input } from 'semantic-ui-react';
 import { validateEmail } from '../../helpers/Validations';
 import firebase from '../../db/Firebase';
 import 'firebase/auth';
+import { toast } from 'react-toastify';
 
 import './scss/RegisterForm.scss';
 
@@ -60,10 +61,10 @@ const Registerform = ({ setSelectedForm }) => {
 
         firebase.auth().createUserWithEmailAndPassword(formRegister.email, formRegister.password)
             .then(() => {
-                console.log('Usuario creado');
+                toast.success('Usuario creado');
             }).catch(err => {
+                toast.error('Error al crear la cuenta');
                 console.log(err);
-                console.log('Error al crear la cuenta')
             }).finally(() => {
                 setLoading(false);
                 setSelectedForm(null);
