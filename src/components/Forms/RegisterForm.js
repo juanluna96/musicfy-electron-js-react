@@ -54,11 +54,20 @@ const Registerform = ({ setSelectedForm }) => {
 
         if (!formOk) {
             setError(errorsForm);
+            setLoading(false);
             return;
         }
 
-
-        validateEmail(formRegister.email)
+        firebase.auth().createUserWithEmailAndPassword(formRegister.email, formRegister.password)
+            .then(() => {
+                console.log('Usuario creado');
+            }).catch(err => {
+                console.log(err);
+                console.log('Error al crear la cuenta')
+            }).finally(() => {
+                setLoading(false);
+                setSelectedForm(null);
+            })
     }
 
     return (
@@ -81,12 +90,12 @@ const Registerform = ({ setSelectedForm }) => {
                     { error.password && <span>La contraseña debe tener al menos 6 caracteres</span> }
                 </Form.Field>
                 <Form.Field>
-                    <Input type="password" name="username" placeholder="¿Como deberiamos llamarte?" icon="user circle outline"
+                    <Input type="text" name="username" placeholder="¿Como deberiamos llamarte?" icon="user circle outline"
                         onChange={ onChange } error={ error.username }
                     />
                     { error.username && <span>El nombre de usuario debe tener al menos 3 caracteres</span> }
                 </Form.Field>
-                <Button type="submit" className="button">Continuar</Button>
+                <Button type="submit" className="button" loading={ loading }>Continuar</Button>
             </form>
 
             <div className="register-form__options">
