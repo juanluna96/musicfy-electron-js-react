@@ -30,6 +30,20 @@ const Registerform = ({ setSelectedForm }) => {
         setShowPassword(!showPassword);
     }
 
+    const changeDisplayNameUser = () => {
+        firebase.auth().currentUser.updateProfile({
+            displayName: formRegister.username
+        })
+    }
+
+    const sendEmailVerification = () => {
+        firebase.auth().currentUser.sendEmailVerification().then(() => {
+            toast.success('Email de verificación enviado')
+        }).catch(() => {
+            toast.error('Error al enviar el email de verificación')
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
         setError({});
@@ -61,6 +75,8 @@ const Registerform = ({ setSelectedForm }) => {
 
         firebase.auth().createUserWithEmailAndPassword(formRegister.email, formRegister.password)
             .then(() => {
+                changeDisplayNameUser();
+                sendEmailVerification();
                 toast.success('Usuario creado');
             }).catch(err => {
                 toast.error('Error al crear la cuenta');

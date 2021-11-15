@@ -10,16 +10,18 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  firebase.auth().onAuthStateChanged((currentUser) => {
 
-    if (!currentUser) {
-      setUser(null)
+  firebase.auth().onAuthStateChanged((currentUser) => {
+    if (!currentUser || !currentUser?.emailVerified) {
+      firebase.auth().signOut();
+      setUser(null);
     } else {
-      setUser(currentUser)
+      setUser(currentUser);
     }
 
     setLoading(false);
   });
+
 
   if (loading) {
     return null;
@@ -35,6 +37,7 @@ function App() {
         newestOnTop
         closeOnClick
         rtl={ false }
+        pauseOnFocusLoss
         pauseOnVisibilityChange
         draggable
         pauseOnHover
