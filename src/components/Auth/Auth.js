@@ -14,16 +14,13 @@ const Auth = () => {
     const handleForm = () => {
         switch (selectedForm) {
             case 'login':
-                return <Loginform />
-                break;
+                return <Loginform setSelectedForm={ setSelectedForm } />
 
             case 'register':
                 return <Registerform setSelectedForm={ setSelectedForm } />
-                break;
 
             default:
                 return <AuthOptions setSelectedForm={ setSelectedForm } />
-                break;
         }
     }
 
