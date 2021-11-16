@@ -7,30 +7,43 @@ import 'firebase/auth';
 
 import './scss/LoginForm.scss';
 
+const formLoginDefault = {
+    email: '',
+    password: ''
+}
+
 const Loginform = ({ setSelectedForm }) => {
 
     const [showPassword, setShowPassword] = useState(false);
-
+    const [formLogin, setFormLogin] = useState(formLoginDefault);
 
     const changePasswordType = () => {
         setShowPassword(!showPassword);
     }
 
-    const onSubmit = () => {
+    const onChange = e => {
+        setFormLogin({
+            ...formLogin,
+            [e.target.name]: e.target.value
+        })
+    }
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(formLogin)
     }
 
     return (
         <div className="login-form">
             <h1>Musica para todos.</h1>
 
-            <Form onSubmit={ onSubmit }>
+            <Form onSubmit={ onSubmit } onChange={ onChange }>
                 <Form.Field>
-                    <Input icon='user' iconPosition='left' placeholder='Correo electrónico' />
+                    <Input icon='user' name='email' placeholder='Correo electrónico' />
                 </Form.Field>
                 <Form.Field>
                     <Input type={ showPassword ? 'text' : 'password' } name="password" placeholder="Contraseña"
-                        // onChange={ onChange } error={ error.password }
+                        // error={ error.password }
                         icon={
                             <Icon name={ showPassword ? 'eye slash' : 'eye' } link onClick={ () => changePasswordType() } />
                         }
