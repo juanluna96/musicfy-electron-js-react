@@ -22,6 +22,7 @@
                     &:focus,
                     &:active {
                         background-color: $background-gray-dark;
+                        color: $font-light;
                         border: 0;
                         transition: all 0.3s ease-in-out;
                     }

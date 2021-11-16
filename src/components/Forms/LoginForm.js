@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Icon, Input, Form } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import { validateEmail } from '../../helpers/Validations';
@@ -8,6 +8,13 @@ import 'firebase/auth';
 import './scss/LoginForm.scss';
 
 const Loginform = ({ setSelectedForm }) => {
+
+    const [showPassword, setShowPassword] = useState(false);
+
+
+    const changePasswordType = () => {
+        setShowPassword(!showPassword);
+    }
 
     const onSubmit = () => {
 
@@ -22,7 +29,12 @@ const Loginform = ({ setSelectedForm }) => {
                     <Input icon='user' iconPosition='left' placeholder='Correo electrónico' />
                 </Form.Field>
                 <Form.Field>
-                    <Input icon='lock' iconPosition='left' placeholder='Contraseña' type='password' />
+                    <Input type={ showPassword ? 'text' : 'password' } name="password" placeholder="Contraseña"
+                        // onChange={ onChange } error={ error.password }
+                        icon={
+                            <Icon name={ showPassword ? 'eye slash' : 'eye' } link onClick={ () => changePasswordType() } />
+                        }
+                    />
                 </Form.Field>
                 <Button type='submit' >Iniciar sesion</Button>
             </Form>
