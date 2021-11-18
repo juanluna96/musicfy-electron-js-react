@@ -56,14 +56,19 @@ const Loginform = ({ setSelectedForm }) => {
         if (formOk) {
             firebase.auth().signInWithEmailAndPassword(formLogin.email, formLogin.password)
                 .then(res => {
-                    setLoading(false);
-                    setUserActive(true);
+                    setUserActive(res.user.emailVerified);
                     setUser(res.user);
-                    setSelectedForm('home');
+                    if (!res.user.emailVerified) {
+                        toast.warning('Por favor verifique su correo');
+                    } else {
+                        toast.success('Bienvenido');
+                        setSelectedForm('home');
+                    }
                 })
                 .catch(err => {
+                    handleError(err.code);
+                }).finally(() => {
                     setLoading(false);
-                    toast.error(err.message);
                 })
         }
 
@@ -103,7 +108,7 @@ const Loginform = ({ setSelectedForm }) => {
 
             {
                 !userActive &&
-                <ButtonResendEmailVerification user={ user } setUserActive={ setUserActive } setLoading={ setLoading } loading={ loading } />
+                <ButtonResendEmailVerification user={ user } setUserActive={ setUserActive } setLoading={ setLoading } />
             }
 
             <div className="login-form__options">
@@ -118,7 +123,7 @@ const Loginform = ({ setSelectedForm }) => {
     )
 }
 
-const ButtonResendEmailVerification = (user, setUserActive, loading, setLoading) => {
+const ButtonResendEmailVerification = ({ user, setUserActive, setLoading }) => {
 
     const FirebaseResendEmailVerification = () => {
         setLoading(true);
@@ -139,10 +144,11 @@ const ButtonResendEmailVerification = (user, setUserActive, loading, setLoading)
         <div className="resend-verification-email">
             <p>
                 Si no has recibido el correo de verificación, puedes reenviarlo
-                haciendo click en el botón.
-                <Button onClick={ FirebaseResendEmailVerification } loading={ loading }>
-                    aqui
-                </Button>
+                haciendo click en el botón
+                <span onClick={ FirebaseResendEmailVerification }>
+                    aquí
+                </span>
+                .
             </p>
         </div>
     )
@@ -156,6 +162,10 @@ const handleError = (code) => {
 
         case 'auth/too-many-request':
             toast.warning('Demasiados intentos fallidos, por favor intente más tarde')
+            break;
+
+        case 'auth/wrong-password':
+            toast.warning('El usuario o la contraseña son incorrectos')
             break;
 
         default:

@@ -31,13 +31,13 @@ const Registerform = ({ setSelectedForm }) => {
     }
 
     const changeDisplayNameUser = () => {
-        firebase.auth().currentUser.updateProfile({
+        firebase.auth().currentUser?.updateProfile({
             displayName: formRegister.username
         })
     }
 
     const sendEmailVerification = () => {
-        firebase.auth().currentUser.sendEmailVerification().then(() => {
+        firebase.auth().currentUser?.sendEmailVerification().then(() => {
             toast.success('Email de verificación enviado')
         }).catch(() => {
             toast.error('Error al enviar el email de verificación')
