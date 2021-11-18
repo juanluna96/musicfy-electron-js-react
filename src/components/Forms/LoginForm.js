@@ -18,7 +18,7 @@ const Loginform = ({ setSelectedForm }) => {
     const [formLogin, setFormLogin] = useState(formLoginDefault);
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-    const [userActive, setUserActive] = useState(false);
+    const [userActive, setUserActive] = useState(true);
     const [user, setUser] = useState(null);
 
     const changePasswordType = () => {
@@ -31,6 +31,7 @@ const Loginform = ({ setSelectedForm }) => {
             [e.target.name]: e.target.value
         })
     }
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -72,7 +73,6 @@ const Loginform = ({ setSelectedForm }) => {
     return (
         <div className="login-form">
             <h1>Musica para todos</h1>
-            <h1>{ loading ? 'Loading' : 'Not loading' }</h1>
 
             <Form onSubmit={ onSubmit } onChange={ onChange }>
                 <Form.Field>
@@ -101,6 +101,11 @@ const Loginform = ({ setSelectedForm }) => {
                 <Button type='submit' loading={ loading }>Iniciar sesion</Button>
             </Form>
 
+            {
+                !userActive &&
+                <ButtonResendEmailVerification user={ user } setUserActive={ setUserActive } setLoading={ setLoading } loading={ loading } />
+            }
+
             <div className="login-form__options">
                 <p onClick={ () => setSelectedForm(null) }> Volver </p>
                 <p>¿No tienes cuenta?
@@ -112,5 +117,52 @@ const Loginform = ({ setSelectedForm }) => {
         </div>
     )
 }
+
+const ButtonResendEmailVerification = (user, setUserActive, loading, setLoading) => {
+
+    const FirebaseResendEmailVerification = () => {
+        setLoading(true);
+        user.sendEmailVerification()
+            .then(() => {
+                toast.success('Se ha enviado un correo de verificación');
+            })
+            .catch(err => {
+                console.log(err);
+                handleError(err.code);
+            }).finally(() => {
+                setLoading(false);
+                setUserActive(false);
+            });
+    }
+
+    return (
+        <div className="resend-verification-email">
+            <p>
+                Si no has recibido el correo de verificación, puedes reenviarlo
+                haciendo click en el botón.
+                <Button onClick={ FirebaseResendEmailVerification } loading={ loading }>
+                    aqui
+                </Button>
+            </p>
+        </div>
+    )
+}
+
+const handleError = (code) => {
+    switch (code) {
+        case 'auth/user-not-found':
+            toast.warning('El usuario o la contraseña son incorrectos')
+            break;
+
+        case 'auth/too-many-request':
+            toast.warning('Demasiados intentos fallidos, por favor intente más tarde')
+            break;
+
+        default:
+            toast.error('Error desconocido')
+            break;
+    }
+}
+
 
 export default Loginform
