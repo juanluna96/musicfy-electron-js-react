@@ -10,3 +10,31 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+
+/* -------------------------------------------------------------------------- */
+
+
+/*                                  Toastify                                  */
+
+
+/* -------------------------------------------------------------------------- */
+
+.Toastify {
+    &__toast-container {
+        &--top-center {
+            width: 100%;
+            top: 0;
+            padding: 5px;
+            margin: 0;
+            .Toastify__toast {
+                &--success {
+                    background-color: $background-primary;
+                }
+                .Toastify__close-button {
+                    align-self: center;
+                }
+            }
+        }
+    }
+}

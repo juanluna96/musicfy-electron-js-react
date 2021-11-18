@@ -1,19 +1,49 @@
-import './App.scss';
+import { useState } from 'react';
+
 import firebase from './db/Firebase';
 import 'firebase/compat/auth';
+import Userlogged from './components/Usuarios/UserLogged';
+import Auth from './components/Auth';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log(user);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+  firebase.auth().onAuthStateChanged((currentUser) => {
+    if (!currentUser || !currentUser?.emailVerified) {
+      firebase.auth().signOut();
+      setUser(null);
     } else {
-      console.log('not logged in');
+      setUser(currentUser);
     }
-  })
+
+    setLoading(false);
+  });
+
+
+  if (loading) {
+    return null;
+  }
+
   return (
-    <div className="App-header">
-      <h1>App electron + react</h1>
-    </div>
+    <>
+      { !user ? <Auth /> : <Userlogged /> }
+      <ToastContainer
+        position="top-center"
+        autoClose={ 9999999999 }
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={ false }
+        pauseOnFocusLoss
+        pauseOnVisibilityChange
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }
 
