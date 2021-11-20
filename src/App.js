@@ -5,6 +5,7 @@ import 'firebase/compat/auth';
 import Userlogged from './components/Usuarios/UserLogged';
 import Auth from './components/Auth';
 import { ToastContainer } from 'react-toastify';
+import Loggedlayout from './layouts/LoggedLayout/LoggedLayout';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,7 +30,7 @@ function App() {
 
   return (
     <>
-      { !user ? <Auth /> : <Userlogged /> }
+      { !user ? <Auth /> : <Loggedlayout user={ user } /> }
       <ToastContainer
         position="top-center"
         autoClose={ 9999999999 }
