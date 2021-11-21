@@ -8,6 +8,7 @@ const RouterComponent = () => {
     return (
         <Routes>
             <Route path="/" element={ <Home /> } />
+            <Route path="/artist" element={ <h1>Artistas</h1> } />
         </Routes>
     )
 }

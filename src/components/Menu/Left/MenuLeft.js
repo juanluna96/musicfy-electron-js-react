@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./MenuLeft.scss"
 
@@ -9,10 +9,10 @@ const Menuleft = ({ user }) => {
     return (
         <Menu className="menu-left" vertical>
             <div className="top">
-                <Menu.Item name="home">
+                <Menu.Item as={ Link } to="/" name="home">
                     <Icon name="home" />Inicio
                 </Menu.Item>
-                <Menu.Item name="artist">
+                <Menu.Item as={ Link } to="/artist" name="artist" >
                     <Icon name="music" />Artistas
                 </Menu.Item>
             </div>
