@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import { Link, useLocation } from "react-router-dom";
 
 import "./MenuLeft.scss"
+import { isUserAdmin } from '../../../db/Firestore';
 
 const Menuleft = ({ user }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
+    const [userAdmin, setUserAdmin] = useState(false);
+
+    useEffect(() => {
+        isUserAdmin(user.uid).then(admin => {
+            setUserAdmin(admin)
+        })
+    }, []);
 
     const handleMenu = (e, menu) => {
         setActiveMenu(menu.to);
@@ -24,12 +32,18 @@ const Menuleft = ({ user }) => {
                 </Menu.Item>
             </div>
             <div className="footer">
-                <Menu.Item>
-                    <Icon name="plus square outline" />Nueva cancion
-                </Menu.Item>
-                <Menu.Item>
-                    <Icon name="plus square outline" />Nuevo artista
-                </Menu.Item>
+                {
+                    userAdmin && (
+                        <>
+                            <Menu.Item>
+                                <Icon name="plus square outline" />Nueva cancion
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Icon name="plus square outline" />Nuevo artista
+                            </Menu.Item>
+                        </>
+                    )
+                }
             </div>
         </Menu>
     )
