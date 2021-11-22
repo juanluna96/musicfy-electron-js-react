@@ -6,6 +6,7 @@ import "./Loggedlayout.scss"
 
 import RouterComponent from '../../routes/Routes';
 import Menuleft from '../../components/Menu/Left/';
+import TopBar from '../../components/TopBar';
 
 const Loggedlayout = ({ user }) => {
     return (
@@ -16,7 +17,7 @@ const Loggedlayout = ({ user }) => {
                         <Menuleft user={ user } />
                     </Grid.Column>
                     <Grid.Column className="content" width={ 12 }>
-                        <h2>TopBar</h2>
+                        <TopBar user={ user } />
                         <RouterComponent />
                     </Grid.Column>
                 </Grid.Row>
