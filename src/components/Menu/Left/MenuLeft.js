@@ -6,20 +6,62 @@ import BasicModal from '../../Modal/BasicModal';
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
 
+const modalAdmin = [
+    {
+        title: 'Nuevo artista',
+        content: <div>
+            <p>Nombre del artista</p>
+            <input type="text" />
+            <p>Nombre de la banda</p>
+            <input type="text" />
+            <p>Año de nacimiento</p>
+            <input type="text" />
+            <p>Género</p>
+            <input type="text" />
+            <p>Biografía</p>
+            <textarea></textarea>
+        </div>,
+    },
+    {
+        title: 'Nueva canción',
+        content: <div>
+            <p>Nombre de la canción</p>
+            <input type="text" />
+            <p>Nombre del artista</p>
+            <input type="text" />
+            <p>Año de lanzamiento</p>
+            <input type="text" />
+            <p>Género</p>
+            <input type="text" />
+            <p>Biografía</p>
+            <textarea></textarea>
+        </div>,
+    }
+]
+
 const Menuleft = ({ user }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
     const [userAdmin, setUserAdmin] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState("");
+    const [contentModal, setContentModal] = useState(null);
 
     useEffect(() => {
         isUserAdmin(user.uid).then(admin => {
             setUserAdmin(admin)
         })
-    }, []);
+    }, [user]);
 
     const handleMenu = (e, menu) => {
         setActiveMenu(menu.to);
+    }
+
+    const handleModal = (title, content) => {
+        setTitleModal(title);
+        setContentModal(content);
+        setShowModal(true);
     }
 
     return (
@@ -37,19 +79,22 @@ const Menuleft = ({ user }) => {
                     {
                         userAdmin && (
                             <>
-                                <Menu.Item>
-                                    <Icon name="plus square outline" />Nueva cancion
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <Icon name="plus square outline" />Nuevo artista
-                                </Menu.Item>
+                                {
+                                    modalAdmin.map((modal, index) => {
+                                        return (
+                                            <Menu.Item key={ index } onClick={ () => handleModal(modal.title, modal.content) }>
+                                                <Icon name="plus square outline" />{ modal.title }
+                                            </Menu.Item>
+                                        )
+                                    })
+                                }
                             </>
                         )
                     }
                 </div>
             </Menu>
-            <BasicModal show={ true } setShow={ null } title="test">
-                <h2>Contenido del modal</h2>
+            <BasicModal show={ showModal } setShow={ setShowModal } title={ titleModal }>
+                { contentModal }
             </BasicModal>
         </>
     )
