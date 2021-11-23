@@ -54,6 +54,10 @@ const Menuleft = ({ user }) => {
         })
     }, [user]);
 
+    useEffect(() => {
+        setActiveMenu(location.pathname)
+    }, [location]);
+
     const handleMenu = (e, menu) => {
         setActiveMenu(menu.to);
     }
