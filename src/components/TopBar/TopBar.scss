@@ -1,0 +1,44 @@
+@import '../../scss/';
+.top-bar {
+    height: 50px;
+    background-color: $background-gray-dark-light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    &__left {
+        i {
+            font-size: 20px;
+            color: $font-gray;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    &__right {
+        display: flex;
+        align-items: center;
+        a {
+            color: $font-light;
+            font-size: 14px;
+            margin-right: 20px;
+            &:hover {
+                cursor: pointer;
+                color: $primary-color;
+            }
+        }
+    }
+    img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+    i {
+        transition: all 0.3s ease;
+        &:hover {
+            cursor: pointer;
+            color: $background-red-dark;
+        }
+    }
+}

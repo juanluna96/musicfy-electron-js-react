@@ -9,6 +9,7 @@ const RouterComponent = () => {
         <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/artist" element={ <h1>Artistas</h1> } />
+            <Route path="/settings" element={ <h1>Configuracion de cuenta</h1> } />
         </Routes>
     )
 }
