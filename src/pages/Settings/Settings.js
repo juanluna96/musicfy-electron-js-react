@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import UploadAvatar from '../../components/Settings/UploadAvatar';
 
 import './Settings.scss'
 
@@ -7,7 +8,11 @@ const Settings = ({ user }) => {
     console.log(user);
     return (
         <div className="settings">
-            <h1>Settings</h1>
+            <h1>Configuracion</h1>
+            <div className="avatar-name">
+                <UploadAvatar user={ user } />
+                <h2>Nombre { user.displayName }</h2>
+            </div>
         </div>
     )
 }
