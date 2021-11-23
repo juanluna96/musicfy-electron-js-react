@@ -15,6 +15,11 @@
             border-radius: 100px;
             border-style: dashed;
             padding: 10px;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                border-color: $primary-color;
+                cursor: pointer;
+            }
             .ui.image {
                 width: 100px;
                 height: 100px;

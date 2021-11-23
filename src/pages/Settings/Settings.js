@@ -4,8 +4,6 @@ import UploadAvatar from '../../components/Settings/UploadAvatar';
 import './Settings.scss'
 
 const Settings = ({ user }) => {
-    const [state, setstate] = useState('0');
-    console.log(user);
     return (
         <div className="settings">
             <h1>Configuracion</h1>
