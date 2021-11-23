@@ -18,7 +18,7 @@ const Loggedlayout = ({ user }) => {
                     </Grid.Column>
                     <Grid.Column className="content" width={ 12 }>
                         <TopBar user={ user } />
-                        <RouterComponent />
+                        <RouterComponent user={ user } />
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
