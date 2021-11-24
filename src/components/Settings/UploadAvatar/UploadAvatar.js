@@ -13,30 +13,35 @@ const UploadAvatar = ({ user }) => {
 
     const onDrop = useCallback(acceptedFiles => {
         const file = acceptedFiles[0];
-        const storageRef = firebase.storage().ref(`/avatars/${file.name}`);
-        const task = storageRef.put(file);
-        task.on('state_changed',
-            (snapshot) => {
+        setAvatar(URL.createObjectURL(file));
+        uploadImage(file);
+    }, []);
+
+    const uploadImage = file => {
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`avatars/${user.uid}`).put(file);
+        uploadTask.on('state_changed',
+            snapshot => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Upload is ${progress}% done`);
+                console.log('Upload is ' + progress + '% done');
             },
-            (error) => {
+            error => {
                 console.log(error);
             },
             () => {
-                task.snapshot.ref.getDownloadURL().then(downloadURL => {
-                    setAvatar(downloadURL);
-                    firebase.auth().currentUser.updateProfile({
+                uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+                    user.updateProfile({
                         photoURL: downloadURL
                     }).then(() => {
-                        toast.success("Avatar updated successfully");
-                    }).catch(error => {
-                        toast.error(error.message);
-                    });
-                });
+                        setAvatar(downloadURL);
+                        toast.success('Avatar subido correctamente');
+                    }).catch(err => {
+                        toast.error(err.message);
+                    })
+                })
             }
         )
-    }, []);
+    }
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: 'image/*',
