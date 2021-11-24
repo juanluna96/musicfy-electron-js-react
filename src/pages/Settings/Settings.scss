@@ -26,5 +26,11 @@
                 border-radius: 50%;
             }
         }
+        .user-name {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 80%;
+        }
     }
 }
