@@ -25,7 +25,7 @@ const TopBar = ({ user }) => {
             </div>
             <div className="top-bar-right">
                 <Link to="/settings">
-                    <Image src={ avatar } avatar />
+                    <Image src={ user.photoURL ? user.photoURL : avatar } avatar />
                     { user.displayName }
                 </Link>
                 <Icon name="power off" onClick={ logout } />

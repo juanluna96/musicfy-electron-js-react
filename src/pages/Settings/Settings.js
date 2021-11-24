@@ -3,12 +3,12 @@ import UploadAvatar from '../../components/Settings/UploadAvatar';
 
 import './Settings.scss'
 
-const Settings = ({ user }) => {
+const Settings = ({ user, setReloadApp }) => {
     return (
         <div className="settings">
             <h1>Configuracion</h1>
             <div className="avatar-name">
-                <UploadAvatar user={ user } />
+                <UploadAvatar setReloadApp={ setReloadApp } user={ user } />
                 <h2>Nombre { user.displayName }</h2>
             </div>
         </div>
