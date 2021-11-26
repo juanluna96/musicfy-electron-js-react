@@ -3,7 +3,7 @@ import { Modal, Icon } from 'semantic-ui-react';
 
 import './BasicModal.scss'
 
-const Basicmodal = ({ title, children, size, show, setShow }) => {
+const Basicmodal = ({ title, children, size = "tiny", show, setShow }) => {
     const onClose = () => {
         setShow(false);
     }

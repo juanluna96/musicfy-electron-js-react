@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import firebase from './db/Firebase';
 import 'firebase/compat/auth';
-import Userlogged from './components/Usuarios/UserLogged';
 import Auth from './components/Auth';
 import { ToastContainer } from 'react-toastify';
 import Loggedlayout from './layouts/LoggedLayout/LoggedLayout';
