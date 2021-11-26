@@ -4,10 +4,24 @@ import { Form, Icon, Input, Button } from 'semantic-ui-react'
 import firebaseApp from '../../../db/Firebase';
 import 'firebase/compat/auth'
 
-const UserName = ({ user }) => {
-    const onEdit = () => {
+const modalEditName = {
+    title: 'Editar nombre',
+    content: (
+        <Form>
+            <Form.Field>
+                <Input icon='user' iconPosition='left' placeholder='Nombre' />
+            </Form.Field>
+        </Form>
+    )
+}
 
+const UserName = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
+    const onEdit = () => {
+        setTitleModal(modalEditName.title)
+        setContentModal(modalEditName.content)
+        setModalOpen(true)
     }
+
     return (
         <div className="user-name">
             <h2>{ user.displayName }</h2>
