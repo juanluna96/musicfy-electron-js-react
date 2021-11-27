@@ -1,6 +1,5 @@
 const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, ipcMain, BrowserWindow } = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -11,7 +10,14 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 900,
         height: 680,
-        icon: "src/assets/img/png/logo-green.png"
+        icon: "src/assets/img/png/logo-green.png",
+        frame: false,
+        titleBarStyle: 'hidden',
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+        },
     });
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
     if (isDev) {
@@ -34,4 +40,16 @@ app.on('activate', () => {
     if (mainWindow === null) {
         createWindow();
     }
+});
+
+ipcMain.handle("minimize-event", () => {
+    mainWindow.minimize();
+});
+
+ipcMain.handle("unmaximize-event", () => {
+    mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
+});
+
+ipcMain.handle("close-event", () => {
+    app.quit();
 });

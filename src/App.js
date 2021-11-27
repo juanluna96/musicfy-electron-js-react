@@ -5,6 +5,7 @@ import 'firebase/compat/auth';
 import Auth from './components/Auth';
 import { ToastContainer } from 'react-toastify';
 import Loggedlayout from './layouts/LoggedLayout/LoggedLayout';
+import TitleBarComponent from './layouts/TitleBarComponent/TitleBarComponent';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <>
+      <TitleBarComponent />
       { !user ? <Auth /> : <Loggedlayout setReloadApp={ setReloadApp } user={ user } /> }
       <ToastContainer
         position="top-center"
