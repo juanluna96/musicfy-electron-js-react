@@ -1,6 +1,7 @@
 @import '../../scss/';
 .settings {
     margin: 50px 100px 0 100px;
+    color: $font-gray;
     >h1 {
         font-size: 2.5em;
         margin-bottom: 20px;
@@ -33,6 +34,26 @@
             align-items: center;
             width: 100%;
             max-width: 80%;
+        }
+    }
+    .user-email {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 40px;
+        padding: 0px 20px 0px 0px;
+        h3 {
+            margin: 0;
+        }
+    }
+    .ui.button {
+        border-radius: 50px;
+        color: $font-light;
+        background-color: $primary-color;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            color: $background-gray-light;
+            background-color: $primary-color-hover;
         }
     }
 }

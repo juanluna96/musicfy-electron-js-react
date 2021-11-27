@@ -55,7 +55,7 @@ const UploadAvatar = ({ user, setReloadApp }) => {
             <input { ...getInputProps() } />
             {
                 isDragActive ?
-                    <p>Drop the files here ...</p> :
+                    <p>Arrastra la foto aqui ...</p> :
                     <div className="upload-avatar__image">
                         <Image src={ avatar ? avatar : avatarUrl } size="small" cicular="true" />
                     </div>

@@ -19,7 +19,7 @@
         display: flex;
         align-items: center;
         a {
-            color: $font-light;
+            color: $font-gray;
             font-size: 14px;
             margin-right: 20px;
             &:hover {
@@ -35,6 +35,7 @@
         border-radius: 50%;
     }
     i {
+        color: $font-gray;
         transition: all 0.3s ease;
         font-size: 17px !important;
         margin-bottom: 4px !important;

@@ -20,7 +20,7 @@ const UserName = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
     return (
         <div className="user-name">
             <h2>{ user.displayName }</h2>
-            <Button cicular onClick={ onEdit }>
+            <Button cicular="true" onClick={ onEdit }>
                 <Icon name="pencil alternate" />
                 Actualizar
             </Button>
