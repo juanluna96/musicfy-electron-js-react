@@ -59,9 +59,9 @@ const ChangeDisplayNameForm = ({ username, setModalOpen }) => {
             <Form.Field>
                 <Input
                     placeholder='Nombre'
-                    value={ username }
+                    value={ formData.displayName }
                     onChange={ (e) => {
-                        setFormData({ ...formData, displayName: e.target.value })
+                        setFormData({ displayName: e.target.value })
                     } }
                 />
             </Form.Field>

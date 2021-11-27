@@ -1,12 +1,12 @@
-import React from 'react'
-import { Form, Button } from 'semantic-ui-react';
+import React, { useState } from 'react'
+import { Form, Button, Input } from 'semantic-ui-react';
 
 const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 
     const onEditEmail = () => {
-        const emailComponent = <EmailForm />
+        const emailComponent = <EmailForm user={ user } setModalOpen={ setModalOpen } />
         setModalOpen(true)
-        setTitleModal('Editar correo electrónico')
+        setTitleModal('Editar correo electrónico y contraseña')
         setContentModal(emailComponent)
     }
 
@@ -20,11 +20,32 @@ const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
     )
 }
 
-const EmailForm = () => {
+const EmailForm = ({ user, setModalOpen }) => {
+    const [FormData, setFormData] = useState({
+        email: user.email,
+        password: ''
+    });
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+
+    }
+
+    const onChange = (e) => {
+        setFormData({
+            ...FormData,
+            [e.target.name]: e.target.value
+        })
+    }
+
     return (
-        <Form>
+        <Form onSubmit={ onSubmit } onChange={ onChange }>
             <Form.Field>
-                <input placeholder='Correo electrónico' />
+                <Input value={ Form.email } name="email" placeholder='Correo electrónico' />
+            </Form.Field>
+            <Form.Field>
+                <Input value={ Form.password } name="password" placeholder='Contraseña' type='password' />
             </Form.Field>
             <Button type='submit'>Actualizar</Button>
         </Form>
