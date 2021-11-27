@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Form, Button, Input, Icon } from 'semantic-ui-react';
 
 const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 
@@ -25,11 +25,10 @@ const EmailForm = ({ user, setModalOpen }) => {
         email: user.email,
         password: ''
     });
+    const [passwordType, setPasswordType] = useState(true);
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-
     }
 
     const onChange = (e) => {
@@ -39,13 +38,21 @@ const EmailForm = ({ user, setModalOpen }) => {
         })
     }
 
+    const onChangePasswordType = () => {
+        setPasswordType(!passwordType)
+    }
+
     return (
         <Form onSubmit={ onSubmit } onChange={ onChange }>
             <Form.Field>
                 <Input value={ Form.email } name="email" placeholder='Correo electrónico' />
             </Form.Field>
             <Form.Field>
-                <Input value={ Form.password } name="password" placeholder='Contraseña' type='password' />
+                <Input value={ Form.password } name="password" placeholder='Contraseña' type={ passwordType ? 'password' : 'text' }
+                    icon={
+                        <Icon name={ passwordType ? 'eye' : 'eye slash outline' } onClick={ onChangePasswordType } link />
+                    }
+                />
             </Form.Field>
             <Button type='submit'>Actualizar</Button>
         </Form>
