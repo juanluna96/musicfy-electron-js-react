@@ -11,8 +11,8 @@ function createWindow() {
         width: 900,
         height: 680,
         icon: "src/assets/img/png/logo-green.png",
-        frame: false,
-        titleBarStyle: 'hidden',
+        // frame: false,
+        // titleBarStyle: 'hidden',
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
