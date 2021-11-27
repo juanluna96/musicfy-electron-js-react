@@ -20,10 +20,10 @@ const TopBar = ({ user }) => {
 
     return (
         <div className="top-bar">
-            <div className="top-bar-left">
+            <div className="top-bar__left">
                 <Icon name="angle left" onClick={ goBack } />
             </div>
-            <div className="top-bar-right">
+            <div className="top-bar__right">
                 <Link to="/settings">
                     <Image src={ user.photoURL ? user.photoURL : avatar } avatar />
                     { user.displayName }

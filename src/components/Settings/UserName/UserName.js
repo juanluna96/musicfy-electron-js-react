@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import { Form, Icon, Input, Button } from 'semantic-ui-react'
 import firebaseApp from '../../../db/Firebase';
@@ -9,6 +9,7 @@ const modalEditName = {
 }
 
 const UserName = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
+
     const onEdit = () => {
         const formComponent = <ChangeDisplayNameForm username={ user.displayName } setModalOpen={ setModalOpen } />
         setTitleModal(modalEditName.title)
@@ -28,33 +29,44 @@ const UserName = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 }
 
 const ChangeDisplayNameForm = ({ username, setModalOpen }) => {
+    const [formData, setFormData] = useState({ displayName: username });
+    const [loading, setLoading] = useState(false);
+
     const onSubmit = async (e) => {
-        e.preventDefault()
-        const { displayName } = e.target
-        const user = firebaseApp.auth().currentUser
-        try {
-            await user.updateProfile({ displayName: displayName.value })
-            setModalOpen(false)
-            toast.success('Nombre actualizado')
-        } catch (error) {
-            toast.error(error.message)
+        e.preventDefault();
+        setLoading(true);
+
+        if (formData.displayName === '') {
+            setModalOpen(false);
+            toast.error('El nombre no puede estar vacío');
+            return;
         }
+
+        try {
+            await firebaseApp.auth().currentUser.updateProfile({ displayName: formData.displayName });
+            setModalOpen(false);
+            toast.success('Nombre actualizado');
+        } catch (error) {
+            setModalOpen(false);
+            toast.error(error.message);
+        }
+
+        setLoading(false);
     }
 
     return (
-        <Form onSubmit={ onSubmit }>
+        <Form onSubmit={ onSubmit } >
             <Form.Field>
                 <Input
                     placeholder='Nombre'
                     value={ username }
                     onChange={ (e) => {
-                        setModalOpen(true)
-                        setModalOpen(true)
+                        setFormData({ ...formData, displayName: e.target.value })
                     } }
                 />
             </Form.Field>
-            <Button type='submit'>Actualizar</Button>
-        </Form>
+            <Button type='submit' loading={ loading }>Actualizar</Button>
+        </Form >
     )
 }
 
