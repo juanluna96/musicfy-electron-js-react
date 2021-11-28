@@ -19,7 +19,7 @@
         display: flex;
         align-items: center;
         a {
-            color: $font-light;
+            color: $font-gray;
             font-size: 14px;
             margin-right: 20px;
             &:hover {
@@ -31,11 +31,14 @@
     img {
         width: 50px;
         height: 50px;
-        margin-right: 10px;
+        margin-right: 20px;
         border-radius: 50%;
     }
     i {
+        color: $font-gray;
         transition: all 0.3s ease;
+        font-size: 17px !important;
+        margin-bottom: 4px !important;
         &:hover {
             cursor: pointer;
             color: $background-red-dark;

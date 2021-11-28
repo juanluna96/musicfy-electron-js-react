@@ -3,13 +3,14 @@ import { Routes, Route } from 'react-router-dom'
 
 // Pages
 import Home from '../pages/Home'
+import Settings from '../pages/Settings';
 
-const RouterComponent = () => {
+const RouterComponent = ({ user, setReloadApp }) => {
     return (
         <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/artist" element={ <h1>Artistas</h1> } />
-            <Route path="/settings" element={ <h1>Configuracion de cuenta</h1> } />
+            <Route path="/settings" element={ <Settings setReloadApp={ setReloadApp } user={ user } /> } />
         </Routes>
     )
 }

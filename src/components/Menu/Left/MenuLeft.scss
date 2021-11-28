@@ -9,19 +9,20 @@
     padding-top: 50px;
     .item,
     a.item {
-        color: $font-light;
+        color: $font-gray;
         font-weight: bold;
         font-size: 14px;
         border-left: 4px solid transparent;
         width: 100%;
         &:hover,
         &:active {
-            color: $font-gray;
+            color: $font-light;
             background-color: transparent;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
         }
         &.active {
+            color: $font-light;
             border-color: $primary-color;
         }
     }

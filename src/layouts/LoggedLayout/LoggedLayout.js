@@ -8,7 +8,7 @@ import RouterComponent from '../../routes/Routes';
 import Menuleft from '../../components/Menu/Left/';
 import TopBar from '../../components/TopBar';
 
-const Loggedlayout = ({ user }) => {
+const Loggedlayout = ({ user, setReloadApp }) => {
     return (
         <BrowserRouter>
             <Grid className="logged-layout">
@@ -18,7 +18,7 @@ const Loggedlayout = ({ user }) => {
                     </Grid.Column>
                     <Grid.Column className="content" width={ 12 }>
                         <TopBar user={ user } />
-                        <RouterComponent />
+                        <RouterComponent user={ user } setReloadApp={ setReloadApp } />
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
