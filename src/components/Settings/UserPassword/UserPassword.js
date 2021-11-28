@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Icon, Input } from 'semantic-ui-react'
+import { toast } from 'react-toastify';
 
 const UserPassword = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
     const onEdit = () => {
@@ -18,6 +19,7 @@ const UserPassword = ({ user, setModalOpen, setTitleModal, setContentModal }) =>
 }
 
 const ChangePasswordForm = () => {
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         password: '',
         newPassword: '',
@@ -30,7 +32,30 @@ const ChangePasswordForm = () => {
         confirmPassword: true
     })
 
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        if (!formData.newPassword || !formData.password || !formData.confirmPassword) {
+            toast.warning('Todos los campos son obligatorios')
+            return
+        }
+
+        if (formData.newPassword !== formData.confirmPassword) {
+            toast.warning('Las contraseñas no coinciden')
+            return
+        }
+
+        if (formData.password === formData.newPassword) {
+            toast.warning('La nueva contraseña no puede ser igual a la actual')
+            return
+        }
+
+        if (formData.newPassword.length < 6) {
+            toast.warning('La nueva contraseña debe tener al menos 6 caracteres')
+            return
+        }
+
         console.log(formData)
     }
 
