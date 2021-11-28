@@ -21,11 +21,11 @@ const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 }
 
 const EmailForm = ({ user, setModalOpen }) => {
+    const [passwordType, setPasswordType] = useState(true);
     const [FormData, setFormData] = useState({
         email: user.email,
         password: ''
     });
-    const [passwordType, setPasswordType] = useState(true);
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -45,10 +45,10 @@ const EmailForm = ({ user, setModalOpen }) => {
     return (
         <Form onSubmit={ onSubmit } onChange={ onChange }>
             <Form.Field>
-                <Input value={ Form.email } name="email" placeholder='Correo electrónico' />
+                <Input value={ FormData.email } name="email" placeholder='Correo electrónico' />
             </Form.Field>
             <Form.Field>
-                <Input value={ Form.password } name="password" placeholder='Contraseña' type={ passwordType ? 'password' : 'text' }
+                <Input value={ FormData.password } name="password" placeholder='Contraseña' type={ passwordType ? 'password' : 'text' }
                     icon={
                         <Icon name={ passwordType ? 'eye' : 'eye slash outline' } onClick={ onChangePasswordType } link />
                     }
