@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { Form, Button, Input, Icon } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import { reAuthenticate } from '../../../db/Firestore';
+import alertErrors from '../../../helpers/AlertsFirebase';
+import firebase from '../../../db/Firebase'
+import 'firebase/compat/auth';
 
 const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 
     const onEditEmail = () => {
         const emailComponent = <EmailForm user={ user } setModalOpen={ setModalOpen } />
         setModalOpen(true)
-        setTitleModal('Editar correo electrónico y contraseña')
+        setTitleModal('Editar correo electrónico')
         setContentModal(emailComponent)
     }
 
@@ -53,15 +56,16 @@ const EmailForm = ({ user, setModalOpen }) => {
                 setModalOpen(false);
                 setLoading(false);
                 toast.success('Correo electrónico actualizado');
-            }).catch(() => {
+                firebase.auth().signOut();
+            }).catch((err) => {
                 setModalOpen(false);
                 setLoading(false);
-                toast.error('Error al actualizar correo electrónico');
+                alertErrors(err?.code)
             })
-        }).catch(() => {
+        }).catch((err) => {
             setModalOpen(false);
             setLoading(false);
-            toast.error('Contraseña incorrecta');
+            alertErrors(err?.code);
         })
     }
 
