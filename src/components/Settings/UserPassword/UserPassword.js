@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Form, Icon, Input } from 'semantic-ui-react'
 import { toast } from 'react-toastify';
+import { reAuthenticate } from '../../../db/Firestore';
+import firebase from '../../../db/Firebase';
+import alertErrors from '../../../helpers/AlertsFirebase';
 
 const UserPassword = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
     const onEdit = () => {
-        const formComponent = <ChangePasswordForm />
+        const formComponent = <ChangePasswordForm setModalOpen={ setModalOpen } />
         setModalOpen(true)
         setTitleModal('Cambiar contraseña')
         setContentModal(formComponent)
@@ -18,13 +21,15 @@ const UserPassword = ({ user, setModalOpen, setTitleModal, setContentModal }) =>
     )
 }
 
-const ChangePasswordForm = () => {
+const FormDataEmpty = {
+    password: '',
+    newPassword: '',
+    confirmPassword: ''
+}
+
+const ChangePasswordForm = ({ setModalOpen }) => {
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        password: '',
-        newPassword: '',
-        confirmPassword: ''
-    })
+    const [formData, setFormData] = useState(FormDataEmpty)
 
     const [passwordType, setPasswordType] = useState({
         password: true,
@@ -37,28 +42,45 @@ const ChangePasswordForm = () => {
         setLoading(true);
 
         if (!formData.newPassword || !formData.password || !formData.confirmPassword) {
+            setLoading(false);
             toast.warning('Todos los campos son obligatorios')
             return
         }
 
         if (formData.newPassword !== formData.confirmPassword) {
+            setLoading(false);
             toast.warning('Las contraseñas no coinciden')
             return
         }
 
         if (formData.password === formData.newPassword) {
+            setLoading(false);
             toast.warning('La nueva contraseña no puede ser igual a la actual')
             return
         }
 
         if (formData.newPassword.length < 6) {
+            setLoading(false);
             toast.warning('La nueva contraseña debe tener al menos 6 caracteres')
             return
         }
 
-        console.log(formData)
+        reAuthenticate(formData.password).then(() => {
+            const user = firebase.auth().currentUser;
+            user.updatePassword(formData.newPassword).then(() => {
+                setLoading(false);
+                setModalOpen(false);
+                firebase.auth().signOut();
+                toast.success('Contraseña actualizada')
+            }).catch((err) => {
+                setLoading(false);
+                alertErrors(err?.code)
+            })
+        }).catch((err) => {
+            setLoading(false);
+            alertErrors(err?.code)
+        })
     }
-
 
     const onChange = (e) => {
         setFormData({
@@ -96,7 +118,7 @@ const ChangePasswordForm = () => {
                     } />
                 } />
             </Form.Field>
-            <Button type='submit'>Cambiar contraseña</Button>
+            <Button type='submit' loading={ loading }>Cambiar contraseña</Button>
         </Form>
     )
 }
