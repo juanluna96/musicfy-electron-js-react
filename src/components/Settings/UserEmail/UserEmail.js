@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button, Input, Icon } from 'semantic-ui-react';
+import { toast } from 'react-toastify';
+import { reAuthenticate } from '../../../db/Firestore';
 
 const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 
@@ -22,13 +24,45 @@ const UserEmail = ({ user, setModalOpen, setTitleModal, setContentModal }) => {
 
 const EmailForm = ({ user, setModalOpen }) => {
     const [passwordType, setPasswordType] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [FormData, setFormData] = useState({
         email: user.email,
         password: ''
     });
 
     const onSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setLoading(true);
+
+        if (!FormData.email || !FormData.password) {
+            setModalOpen(false);
+            setLoading(false);
+            toast.warning('Todos los campos son obligatorios');
+            return;
+        }
+
+        if (FormData.email === user.email) {
+            setModalOpen(false);
+            setLoading(false);
+            toast.warning('El correo electrónico no puede ser el mismo');
+            return;
+        }
+
+        reAuthenticate(FormData.password).then(() => {
+            user.updateEmail(FormData.email).then(() => {
+                setModalOpen(false);
+                setLoading(false);
+                toast.success('Correo electrónico actualizado');
+            }).catch(() => {
+                setModalOpen(false);
+                setLoading(false);
+                toast.error('Error al actualizar correo electrónico');
+            })
+        }).catch(() => {
+            setModalOpen(false);
+            setLoading(false);
+            toast.error('Contraseña incorrecta');
+        })
     }
 
     const onChange = (e) => {
@@ -54,7 +88,7 @@ const EmailForm = ({ user, setModalOpen }) => {
                     }
                 />
             </Form.Field>
-            <Button type='submit'>Actualizar</Button>
+            <Button type='submit' loading={ loading }>Actualizar</Button>
         </Form>
     )
 }
