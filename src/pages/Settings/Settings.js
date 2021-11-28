@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import UploadAvatar from '../../components/Settings/UploadAvatar';
 import UserName from '../../components/Settings/UserName';
 import UserEmail from '../../components/Settings/UserEmail';
+import UserPassword from '../../components/Settings/UserPassword';
 import BasicModal from '../../components/Modal/BasicModal';
 
 import './Settings.scss'
@@ -24,6 +25,12 @@ const Settings = ({ user, setReloadApp }) => {
                 />
             </div>
             <UserEmail
+                user={ user }
+                setModalOpen={ setModalOpen }
+                setTitleModal={ setTitleModal }
+                setContentModal={ setContentModal }
+            />
+            <UserPassword
                 user={ user }
                 setModalOpen={ setModalOpen }
                 setTitleModal={ setTitleModal }
