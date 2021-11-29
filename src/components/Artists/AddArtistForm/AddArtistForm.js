@@ -2,8 +2,12 @@ import React, { useState, useCallback } from 'react';
 import { Form, Input, Button, Image } from 'semantic-ui-react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
+import { v4 as uuid } from 'uuid';
+import firebase from "../../../db/Firebase";
+import "firebase/compat/storage";
 
 import './AddArtistForm.scss';
+import alertErrors from '../../../helpers/AlertsFirebase';
 
 const emptyFormData = {
     name: '',
@@ -34,6 +38,12 @@ const AddArtistForm = ({ setShowModal }) => {
         })
     }
 
+    const uploadImage = fileId => {
+        const ref = firebase.storage().ref(`/artists/${fileId}`);
+        const task = ref.put(file);
+        return task;
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -50,6 +60,28 @@ const AddArtistForm = ({ setShowModal }) => {
             return
         }
 
+        const fileId = uuid();
+        uploadImage(fileId).then(() => {
+            const db = firebase.firestore();
+            db.collection('artists').add({
+                name: formData.name,
+                banner: fileId,
+                createdAt: new Date()
+            }).then(() => {
+                setFormData(emptyFormData);
+                setBanner(null);
+                setFile(null);
+                setLoading(false);
+                setShowModal(false);
+                toast.success('Artista agregado correctamente');
+            }).catch((err) => {
+                setLoading(false);
+                alertErrors(err?.code)
+            })
+        }).catch((err) => {
+            setLoading(false);
+            alertErrors(err?.code)
+        })
     }
 
     return (
