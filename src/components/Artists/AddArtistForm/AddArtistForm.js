@@ -4,8 +4,13 @@ import { useDropzone } from 'react-dropzone';
 
 import './AddArtistForm.scss';
 
+const emptyFormData = {
+    name: '',
+}
+
 const AddArtistForm = ({ setShowModal }) => {
     const noImage = process.env.PUBLIC_URL + '/img/no-image.png';
+    const [formData, setFormData] = useState(emptyFormData);
     const [banner, setBanner] = useState(null);
     const [file, setFile] = useState(null);
 
@@ -19,6 +24,13 @@ const AddArtistForm = ({ setShowModal }) => {
         noKeyboard: true,
         onDrop
     });
+
+    const onChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        })
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -47,7 +59,7 @@ const AddArtistForm = ({ setShowModal }) => {
                 />
             </Form.Field>
             <Form.Field>
-                <Input placeholder='Nombre del artista' />
+                <Input name="name" onChange={ onChange } placeholder='Nombre del artista' />
             </Form.Field>
             <Button type='submit'>Crear artista</Button>
         </Form >
