@@ -7,28 +7,6 @@ import AddArtistForm from '../../Artists/AddArtistForm';
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
 
-const modalAdmin = [
-    {
-        title: 'Nuevo artista',
-        content: <AddArtistForm />,
-    },
-    {
-        title: 'Nueva canción',
-        content: <div>
-            <p>Nombre de la canción</p>
-            <input type="text" />
-            <p>Nombre del artista</p>
-            <input type="text" />
-            <p>Año de lanzamiento</p>
-            <input type="text" />
-            <p>Género</p>
-            <input type="text" />
-            <p>Biografía</p>
-            <textarea></textarea>
-        </div>,
-    }
-]
-
 const Menuleft = ({ user }) => {
     const location = useLocation()
 
@@ -37,6 +15,19 @@ const Menuleft = ({ user }) => {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [contentModal, setContentModal] = useState(null);
+
+    const modalAdmin = [
+        {
+            title: 'Nuevo artista',
+            content: <AddArtistForm setShowModal={ setShowModal } />,
+        },
+        {
+            title: 'Nueva canción',
+            content: <div>
+                <p>Nombre de la canción</p>
+            </div>,
+        }
+    ]
 
     useEffect(() => {
         isUserAdmin(user.uid).then(admin => {
