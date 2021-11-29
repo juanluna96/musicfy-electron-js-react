@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import { Link, useLocation } from "react-router-dom";
 import BasicModal from '../../Modal/BasicModal';
+import AddArtistForm from '../../Artists/AddArtistForm';
 
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
@@ -9,18 +10,7 @@ import { isUserAdmin } from '../../../db/Firestore';
 const modalAdmin = [
     {
         title: 'Nuevo artista',
-        content: <div>
-            <p>Nombre del artista</p>
-            <input type="text" />
-            <p>Nombre de la banda</p>
-            <input type="text" />
-            <p>Año de nacimiento</p>
-            <input type="text" />
-            <p>Género</p>
-            <input type="text" />
-            <p>Biografía</p>
-            <textarea></textarea>
-        </div>,
+        content: <AddArtistForm />,
     },
     {
         title: 'Nueva canción',
