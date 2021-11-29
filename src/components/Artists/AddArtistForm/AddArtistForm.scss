@@ -18,4 +18,18 @@
             z-index: 1;
         }
     }
+    .artist-avatar {
+        height: 120px;
+        width: 120px;
+        background-color: $background-gray-light;
+        margin-bottom: 15px;
+        .avatar {
+            height: 100%;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+    }
 }
