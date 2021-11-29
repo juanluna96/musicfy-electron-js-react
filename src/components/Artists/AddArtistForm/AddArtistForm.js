@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Input, Button, Image } from 'semantic-ui-react';
 import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-toastify';
 
 import './AddArtistForm.scss';
 
@@ -13,6 +14,7 @@ const AddArtistForm = ({ setShowModal }) => {
     const [formData, setFormData] = useState(emptyFormData);
     const [banner, setBanner] = useState(null);
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const onDrop = useCallback(acceptedFiles => {
         setFile(acceptedFiles[0]);
@@ -34,7 +36,20 @@ const AddArtistForm = ({ setShowModal }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        setShowModal(false);
+        setLoading(true);
+
+        if (!formData.name) {
+            setLoading(false);
+            toast.warning('Porfavor ingresa el nombre del artista');
+            return;
+        }
+
+        if (!file) {
+            setLoading(false);
+            toast.warning('Añade la imagen del artista')
+            return
+        }
+
     }
 
     return (
@@ -52,16 +67,19 @@ const AddArtistForm = ({ setShowModal }) => {
                     }
                 </div>
             </Form.Field>
-            <Form.Field class="artist-avatar">
-                <div
-                    className="avatar"
-                    style={ { backgroundImage: `url('${banner ? banner : noImage}')` } }
-                />
-            </Form.Field>
+            {
+                banner &&
+                <Form.Field className="artist-avatar">
+                    <div
+                        className="avatar"
+                        style={ { backgroundImage: `url('${banner}')` } }
+                    />
+                </Form.Field>
+            }
             <Form.Field>
                 <Input name="name" onChange={ onChange } placeholder='Nombre del artista' />
             </Form.Field>
-            <Button type='submit'>Crear artista</Button>
+            <Button type='submit' loading={ loading }>Crear artista</Button>
         </Form >
     )
 }
