@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import "./Loggedlayout.scss"
 
-import RouterComponent from '../../routes/Routes';
-import Menuleft from '../../components/Menu/Left/';
-import TopBar from '../../components/TopBar';
+import RouterComponent from '../../../routes/Routes';
+import Menuleft from '../../Menu/Left';
+import TopBar from '../../TopBar';
 
 const Loggedlayout = ({ user, setReloadApp }) => {
     return (
