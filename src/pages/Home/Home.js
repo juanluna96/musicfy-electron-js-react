@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import BannerHome from '../../components/layouts/BannerHome';
+import BasicSliderItems from '../../components/Sliders/BasicSliderItems';
 import firebase from '../../db/Firebase';
 import 'firebase/compat/firestore';
 
@@ -21,7 +22,7 @@ const Home = () => {
         <>
             <BannerHome />
             <div className="home">
-                <h1>Home...</h1>
+                <BasicSliderItems title="Ultimos artistas" artists={ artists } />
             </div>
         </>
     )
