@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import firebase from '../../db/Firebase';
 import 'firebase/compat/firestore';
@@ -26,13 +27,20 @@ const Artists = () => {
     }, []);
 
     return (
-        <div className="artists">
-            {
-                artists.map(artist => (
-                    <Artist key={ artist.id } artist={ artist } />
-                ))
-            }
-        </div>
+        <Grid>
+            <Grid.Row className="artists">
+                <Grid.Column width={ 16 }>
+                    <h1>Artistas</h1>
+                </Grid.Column>
+                {
+                    artists.map(artist => (
+                        <Grid.Column key={ artist.id } mobile={ 8 } tablet={ 4 } computer={ 3 }>
+                            <Artist artist={ artist } />
+                        </Grid.Column>
+                    ))
+                }
+            </Grid.Row>
+        </Grid>
     )
 }
 
@@ -50,10 +58,12 @@ const Artist = ({ artist }) => {
     }, [artist]);
 
     return (
-        <div className="artist">
-            <h2>{ artist.name }</h2>
-            <p>{ artist.description }</p>
-        </div>
+        <Link to={ `/artist/${artist.id}` }>
+            <div className="artists__item">
+                <div className="avatar" style={ { backgroundImage: `url(${banner})` } } />
+                <h3>{ artist.name }</h3>
+            </div>
+        </Link>
     )
 }
 
