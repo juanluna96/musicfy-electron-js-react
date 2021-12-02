@@ -6,6 +6,7 @@ import AddArtistForm from '../../Artists/AddArtistForm';
 
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
+import AddAlbumForm from '../../Albumns/AddAlbumnForm/AddAlbumForm';
 
 const Menuleft = ({ user, setUpdateArtist }) => {
     const location = useLocation()
@@ -20,6 +21,10 @@ const Menuleft = ({ user, setUpdateArtist }) => {
         {
             title: 'Nuevo artista',
             content: <AddArtistForm setUpdateArtist={ setUpdateArtist } setShowModal={ setShowModal } />,
+        },
+        {
+            title: 'Nuevo album',
+            content: <AddAlbumForm setShowModal={ setShowModal } />,
         },
         {
             title: 'Nueva canción',
