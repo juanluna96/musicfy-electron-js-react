@@ -4,8 +4,8 @@ import firebase from './db/Firebase';
 import 'firebase/compat/auth';
 import Auth from './components/Auth';
 import { ToastContainer } from 'react-toastify';
-import Loggedlayout from './layouts/LoggedLayout/LoggedLayout';
-import TitleBarComponent from './layouts/TitleBarComponent/TitleBarComponent';
+import Loggedlayout from './components/layouts/LoggedLayout/LoggedLayout';
+import TitleBarComponent from './components/layouts/TitleBarComponent/TitleBarComponent';
 
 function App() {
   const [user, setUser] = useState(null);

@@ -2,44 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import { Link, useLocation } from "react-router-dom";
 import BasicModal from '../../Modal/BasicModal';
+import AddArtistForm from '../../Artists/AddArtistForm';
 
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
 
-const modalAdmin = [
-    {
-        title: 'Nuevo artista',
-        content: <div>
-            <p>Nombre del artista</p>
-            <input type="text" />
-            <p>Nombre de la banda</p>
-            <input type="text" />
-            <p>Año de nacimiento</p>
-            <input type="text" />
-            <p>Género</p>
-            <input type="text" />
-            <p>Biografía</p>
-            <textarea></textarea>
-        </div>,
-    },
-    {
-        title: 'Nueva canción',
-        content: <div>
-            <p>Nombre de la canción</p>
-            <input type="text" />
-            <p>Nombre del artista</p>
-            <input type="text" />
-            <p>Año de lanzamiento</p>
-            <input type="text" />
-            <p>Género</p>
-            <input type="text" />
-            <p>Biografía</p>
-            <textarea></textarea>
-        </div>,
-    }
-]
-
-const Menuleft = ({ user }) => {
+const Menuleft = ({ user, setUpdateArtist }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -47,6 +15,19 @@ const Menuleft = ({ user }) => {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [contentModal, setContentModal] = useState(null);
+
+    const modalAdmin = [
+        {
+            title: 'Nuevo artista',
+            content: <AddArtistForm setUpdateArtist={ setUpdateArtist } setShowModal={ setShowModal } />,
+        },
+        {
+            title: 'Nueva canción',
+            content: <div>
+                <p>Nombre de la canción</p>
+            </div>,
+        }
+    ]
 
     useEffect(() => {
         isUserAdmin(user.uid).then(admin => {
@@ -75,7 +56,7 @@ const Menuleft = ({ user }) => {
                     <Menu.Item as={ Link } to="/" active={ activeMenu === '/' } onClick={ handleMenu } name="home">
                         <Icon name="home" />Inicio
                     </Menu.Item>
-                    <Menu.Item as={ Link } to="/artist" active={ activeMenu === '/artist' } onClick={ handleMenu } name="artist" >
+                    <Menu.Item as={ Link } to="/artists" active={ activeMenu === '/artists' } onClick={ handleMenu } name="artists" >
                         <Icon name="music" />Artistas
                     </Menu.Item>
                 </div>
