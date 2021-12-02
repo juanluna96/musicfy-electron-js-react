@@ -10,7 +10,6 @@ const BannerHome = () => {
     useEffect(() => {
         firebase.storage().ref('others/banner.jpg').getDownloadURL().then(url => {
             setBannerUrl(url);
-            console.log(url)
         }).catch(() => { })
     }, []);
 

@@ -13,10 +13,10 @@ const Loggedlayout = ({ user, setReloadApp }) => {
         <BrowserRouter>
             <Grid className="logged-layout">
                 <Grid.Row>
-                    <Grid.Column width={ 4 }>
+                    <Grid.Column width={ 3 }>
                         <Menuleft setReloadApp={ setReloadApp } user={ user } />
                     </Grid.Column>
-                    <Grid.Column className="content" width={ 12 }>
+                    <Grid.Column className="content" width={ 13 }>
                         <TopBar user={ user } />
                         <RouterComponent user={ user } setReloadApp={ setReloadApp } />
                     </Grid.Column>

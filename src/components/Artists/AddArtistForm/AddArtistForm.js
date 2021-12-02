@@ -64,6 +64,7 @@ const AddArtistForm = ({ setShowModal, setReloadApp }) => {
         uploadImage(fileId).then(() => {
             const db = firebase.firestore();
             db.collection('artists').add({
+                id: uuid(),
                 name: formData.name,
                 banner: fileId,
                 createdAt: new Date()
