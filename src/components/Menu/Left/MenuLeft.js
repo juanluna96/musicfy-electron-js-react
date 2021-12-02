@@ -56,7 +56,7 @@ const Menuleft = ({ user, setUpdateArtist }) => {
                     <Menu.Item as={ Link } to="/" active={ activeMenu === '/' } onClick={ handleMenu } name="home">
                         <Icon name="home" />Inicio
                     </Menu.Item>
-                    <Menu.Item as={ Link } to="/artist" active={ activeMenu === '/artist' } onClick={ handleMenu } name="artist" >
+                    <Menu.Item as={ Link } to="/artists" active={ activeMenu === '/artists' } onClick={ handleMenu } name="artists" >
                         <Icon name="music" />Artistas
                     </Menu.Item>
                 </div>

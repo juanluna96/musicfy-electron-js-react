@@ -17,7 +17,11 @@ const BannerArtist = ({ artist }) => {
 
     return (
         <div className="banner-artist" style={ { backgroundImage: `url(${bannerUrl})` } }>
-            BannerArtist...
+            <div className="banner-artist__overlay"></div>
+            <div className="banner-artist__content">
+                <h4>ARTISTA</h4>
+                <h1>{ artist.name }</h1>
+            </div>
         </div>
     )
 }
