@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import firebase from '../../db/Firebase'
+import 'firebase/compat/firestore';
 
+import './Artist.scss';
+
+const db = firebase.firestore(firebase);
 
 const Artist = () => {
-    const params = useParams();
+    const { id } = useParams();
+    const [artist, setArtist] = useState(null);
 
-    console.log(params)
+    useEffect(() => {
+        db.collection('artists').doc(id).get().then(doc => {
+            console.log(doc)
+            setArtist(doc.data());
+        })
+    }, [id]);
 
     return (
         <div>

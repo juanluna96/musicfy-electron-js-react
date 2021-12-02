@@ -13,7 +13,7 @@ const emptyFormData = {
     name: '',
 }
 
-const AddArtistForm = ({ setShowModal, setReloadApp }) => {
+const AddArtistForm = ({ setShowModal, setUpdateArtist }) => {
     const noImage = process.env.PUBLIC_URL + '/img/no-image.png';
     const [formData, setFormData] = useState(emptyFormData);
     const [banner, setBanner] = useState(null);
@@ -64,7 +64,6 @@ const AddArtistForm = ({ setShowModal, setReloadApp }) => {
         uploadImage(fileId).then(() => {
             const db = firebase.firestore();
             db.collection('artists').add({
-                id: uuid(),
                 name: formData.name,
                 banner: fileId,
                 createdAt: new Date()
@@ -74,7 +73,7 @@ const AddArtistForm = ({ setShowModal, setReloadApp }) => {
                 setFile(null);
                 setLoading(false);
                 setShowModal(false);
-                setReloadApp(prevState => !prevState);
+                setUpdateArtist(prevState => !prevState);
                 toast.success('Artista agregado correctamente');
             }).catch((err) => {
                 setLoading(false);

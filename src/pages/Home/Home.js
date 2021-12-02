@@ -8,15 +8,20 @@ import './Home.scss';
 
 const db = firebase.firestore(firebase);
 
-const Home = () => {
+const Home = ({ updateArtist }) => {
     const [artists, setArtists] = useState([]);
 
     useEffect(() => {
         db.collection('artists').get().then(snapshot => {
-            const data = snapshot?.docs.map(doc => doc.data());
+            const data = snapshot?.docs.map(doc => (
+                {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            ));
             setArtists(data);
         });
-    }, []);
+    }, [updateArtist]);
 
     return (
         <>
