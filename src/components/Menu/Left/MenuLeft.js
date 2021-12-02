@@ -7,7 +7,7 @@ import AddArtistForm from '../../Artists/AddArtistForm';
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
 
-const Menuleft = ({ user }) => {
+const Menuleft = ({ user, setReloadApp }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -19,7 +19,7 @@ const Menuleft = ({ user }) => {
     const modalAdmin = [
         {
             title: 'Nuevo artista',
-            content: <AddArtistForm setShowModal={ setShowModal } />,
+            content: <AddArtistForm setReloadApp={ setReloadApp } setShowModal={ setShowModal } />,
         },
         {
             title: 'Nueva canción',

@@ -14,7 +14,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
             <Grid className="logged-layout">
                 <Grid.Row>
                     <Grid.Column width={ 4 }>
-                        <Menuleft user={ user } />
+                        <Menuleft setReloadApp={ setReloadApp } user={ user } />
                     </Grid.Column>
                     <Grid.Column className="content" width={ 12 }>
                         <TopBar user={ user } />

@@ -13,7 +13,7 @@ const emptyFormData = {
     name: '',
 }
 
-const AddArtistForm = ({ setShowModal }) => {
+const AddArtistForm = ({ setShowModal, setReloadApp }) => {
     const noImage = process.env.PUBLIC_URL + '/img/no-image.png';
     const [formData, setFormData] = useState(emptyFormData);
     const [banner, setBanner] = useState(null);
@@ -73,6 +73,7 @@ const AddArtistForm = ({ setShowModal }) => {
                 setFile(null);
                 setLoading(false);
                 setShowModal(false);
+                setReloadApp(prevState => !prevState);
                 toast.success('Artista agregado correctamente');
             }).catch((err) => {
                 setLoading(false);
