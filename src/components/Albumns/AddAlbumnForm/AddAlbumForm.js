@@ -10,10 +10,17 @@ import './AddAlbumForm.scss';
 
 const db = firebase.firestore();
 
+const defaultAlbumForm = {
+    name: '',
+    artist: '',
+    gender: ''
+}
+
 const AddAlbumForm = () => {
     const [albumImage, setAlbumImage] = useState(null);
     const [file, setFile] = useState(null);
     const [artists, setArtists] = useState([]);
+    const [formData, setFormData] = useState(defaultAlbumForm);
 
     useEffect(() => {
         const artistsRef = db.collection('artists');
@@ -22,18 +29,14 @@ const AddAlbumForm = () => {
                 {
                     key: doc.id,
                     text: doc.data().name,
-                    value: doc.data().name,
+                    value: doc.id,
                 }
             ));
-            console.log(artists)
             setArtists(artists);
         });
         return () => unsubscribe();
     }, []);
 
-    const onSubmit = () => {
-        return
-    }
 
     const onDrop = useCallback(acceptedFiles => {
         const file = acceptedFiles[0];
@@ -46,6 +49,14 @@ const AddAlbumForm = () => {
         noKeyboard: true,
         onDrop,
     })
+
+    const onChange = (e, data) => {
+        setFormData({ ...formData, [data.name]: data.value });
+    }
+
+    const onSubmit = () => {
+        console.log(formData);
+    }
 
     return (
         <Form className="add-album-form" onSubmit={ onSubmit }>
@@ -64,9 +75,9 @@ const AddAlbumForm = () => {
                     </div>
                 </Form.Field>
                 <Form.Field className="album-inputs" width={ 11 }>
-                    <Input placeholder="Nombre del album" name="nombre" />
-                    <Dropdown placeholder='Artista' name="artista" lazyload fluid search selection options={ artists } />
-                    <Dropdown placeholder='Genero' name="genero" lazyload fluid search selection options={ genders } />
+                    <Input placeholder="Nombre del album" name="name" onChange={ onChange } />
+                    <Dropdown type="dropdown" placeholder='Artista' name="artist" onChange={ onChange } lazyload fluid search selection options={ artists } />
+                    <Dropdown type="dropdown" placeholder='Genero' name="gender" onChange={ onChange } lazyload fluid search selection options={ genders } />
                 </Form.Field>
             </Form.Group>
             <Button type='submit'>Submit</Button>
