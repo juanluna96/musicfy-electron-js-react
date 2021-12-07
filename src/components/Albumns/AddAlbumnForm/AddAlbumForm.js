@@ -2,13 +2,17 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Form, Input, Button, Image, Dropdown } from 'semantic-ui-react'
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
+import { v4 as uuid } from 'uuid';
+
 import { genders } from '../../../constantes';
-import firebase from '../../../db/Firebase';
+import firebaseApp from '../../../db/Firebase';
+import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 
 import './AddAlbumForm.scss';
 
-const db = firebase.firestore();
+const db = firebaseApp.firestore();
 
 const defaultAlbumForm = {
     name: '',
@@ -21,6 +25,7 @@ const AddAlbumForm = () => {
     const [file, setFile] = useState(null);
     const [artists, setArtists] = useState([]);
     const [formData, setFormData] = useState(defaultAlbumForm);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const artistsRef = db.collection('artists');
@@ -54,8 +59,47 @@ const AddAlbumForm = () => {
         setFormData({ ...formData, [data.name]: data.value });
     }
 
+    const uploadImage = (fileName) => {
+        const storageRef = firebaseApp.storage().ref();
+        const imageRef = storageRef.child(`albums/${fileName}`);
+        const snapshot = imageRef.put(file);
+        return snapshot;
+    }
+
     const onSubmit = () => {
-        console.log(formData);
+        setLoading(true);
+        if (!formData.name || !formData.artist || !formData.gender || !file) {
+            toast.warning('Todos los campos son obligatorios.');
+            setLoading(false);
+            return;
+        }
+
+        const fileName = uuid();
+        uploadImage(fileName).then(() => {
+            const albumRef = db.collection('albums').doc();
+            const albumData = {
+                name: formData.name,
+                artist: formData.artist,
+                gender: formData.gender
+            }
+            albumRef.set(albumData);
+            const artistRef = db.collection('artists').doc(formData.artist);
+            artistRef.update({
+                albums: firebase.firestore.FieldValue.arrayUnion(albumRef.id)
+            });
+            setFormData(defaultAlbumForm);
+            setAlbumImage(null);
+            setFile(null);
+            setLoading(false);
+            toast.success('Album agregado correctamente.');
+        }).catch((error) => {
+            console.log(error)
+            toast.error('Error al subir la imagen.');
+            setLoading(false);
+        });
+
+
+
     }
 
     return (
@@ -80,7 +124,7 @@ const AddAlbumForm = () => {
                     <Dropdown type="dropdown" placeholder='Genero' name="gender" onChange={ onChange } lazyload fluid search selection options={ genders } />
                 </Form.Field>
             </Form.Group>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit' loading={ loading }>Submit</Button>
         </Form>
     )
 }
