@@ -10,6 +10,7 @@ const db = firebase.firestore(firebase);
 
 const Home = ({ updateArtist }) => {
     const [artists, setArtists] = useState([]);
+    const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
         db.collection('artists').get().then(snapshot => {
@@ -22,6 +23,18 @@ const Home = ({ updateArtist }) => {
             setArtists(data);
         });
     }, [updateArtist]);
+
+    useEffect(() => {
+        db.collection('albums').get().then(snapshot => {
+            const data = snapshot?.docs.map(doc => (
+                {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            ));
+            setAlbums(data);
+        });
+    }, []);
 
     return (
         <>
