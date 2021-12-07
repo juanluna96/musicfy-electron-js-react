@@ -20,7 +20,7 @@ const defaultAlbumForm = {
     gender: ''
 }
 
-const AddAlbumForm = () => {
+const AddAlbumForm = ({ setUpdateAlbum }) => {
     const [albumImage, setAlbumImage] = useState(null);
     const [file, setFile] = useState(null);
     const [artists, setArtists] = useState([]);
@@ -80,6 +80,7 @@ const AddAlbumForm = () => {
             const albumData = {
                 name: formData.name,
                 artist: formData.artist,
+                banner: fileName,
                 gender: formData.gender
             }
             albumRef.set(albumData);
@@ -89,6 +90,7 @@ const AddAlbumForm = () => {
             });
             setFormData(defaultAlbumForm);
             setAlbumImage(null);
+            setUpdateAlbum(prevState => !prevState);
             setFile(null);
             setLoading(false);
             toast.success('Album agregado correctamente.');
@@ -97,9 +99,6 @@ const AddAlbumForm = () => {
             toast.error('Error al subir la imagen.');
             setLoading(false);
         });
-
-
-
     }
 
     return (

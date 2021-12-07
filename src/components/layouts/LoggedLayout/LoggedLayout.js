@@ -10,17 +10,18 @@ import TopBar from '../../TopBar';
 
 const Loggedlayout = ({ user, setReloadApp }) => {
     const [updateArtist, setUpdateArtist] = useState(false);
+    const [updateAlbum, setUpdateAlbum] = useState(false);
 
     return (
         <BrowserRouter>
             <Grid className="logged-layout">
                 <Grid.Row>
                     <Grid.Column width={ 3 }>
-                        <Menuleft setUpdateArtist={ setUpdateArtist } user={ user } />
+                        <Menuleft setUpdateArtist={ setUpdateArtist } setUpdateAlbum={ setUpdateAlbum } user={ user } />
                     </Grid.Column>
                     <Grid.Column className="content" width={ 13 }>
                         <TopBar user={ user } />
-                        <RouterComponent updateArtist={ updateArtist } user={ user } setReloadApp={ setReloadApp } />
+                        <RouterComponent updateArtist={ updateArtist } updateAlbum={ updateAlbum } user={ user } setReloadApp={ setReloadApp } />
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
