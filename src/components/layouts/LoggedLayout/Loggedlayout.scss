@@ -1,18 +1,32 @@
 @import '../../../scss/';
 .ui.grid.logged-layout {
     background-color: $background-gray-dark-light;
-    // min-height: 100vh;
+    min-height: 100vh;
     margin: 0;
     >.row {
         padding: 0;
         &:first-of-type {
-            // height: 85vh;
+            height: 85vh;
         }
         &:last-of-type {
-            // height: 10vh;
+            height: 10vh;
         }
         >.column {
             padding: 0;
+        }
+    }
+    .content {
+        overflow-y: scroll;
+        height: calc(100vh - 105px);
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $primary-color-hover;
+            transition: background 0.2s ease-in-out;
+            &:hover {
+                background: $primary-color;
+            }
         }
     }
 }

@@ -23,6 +23,10 @@ const BasicSliderItems = ({ title, list, folder }) => {
         pauseOnHover: true,
     };
 
+    if (list.length === 0) {
+        return null;
+    }
+
     return (
         <div className="basic-slider-items">
             <h2> { title } </h2>
