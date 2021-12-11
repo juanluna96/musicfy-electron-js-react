@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import Settings from '../pages/Settings';
 import Artist from '../pages/Artist';
 import Artists from '../pages/Artists';
+import Albumns from '../pages/Albums';
 
 const RouterComponent = ({ user, updateArtist, updateAlbum, setReloadApp }) => {
     return (
@@ -13,6 +14,7 @@ const RouterComponent = ({ user, updateArtist, updateAlbum, setReloadApp }) => {
             <Route path="/" element={ <Home updateArtist={ updateArtist } updateAlbum={ updateAlbum } /> } />
             <Route path="/artist/:id" element={ <Artist /> } />
             <Route path="/artists" element={ <Artists /> } />
+            <Route path="/albums" element={ <Albumns /> } />
             <Route path="/settings" element={ <Settings setReloadApp={ setReloadApp } user={ user } /> } />
         </Routes>
     )
