@@ -41,7 +41,7 @@ const Home = ({ updateArtist, updateAlbum }) => {
             <BannerHome />
             <div className="home">
                 <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } />
-                <BasicSliderItems title="Ultimos albumnes" folder="albums" list={ albums } />
+                <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } />
             </div>
         </>
     )
