@@ -7,13 +7,15 @@ import 'firebase/compat/storage';
 
 import './Album.scss'
 
+const db = firebase.firestore();
+
 const Album = () => {
     const [album, setAlbum] = useState(null);
     const [banner, setBanner] = useState(null);
+    const [artist, setArtist] = useState(null);
     const { id } = useParams();
 
     useEffect(() => {
-        const db = firebase.firestore();
         const albumRef = db.collection('albums').doc(id);
         albumRef.get().then(doc => {
             const album = {
@@ -24,6 +26,21 @@ const Album = () => {
         });
     }, [id]);
 
+    // Get artist of the album
+    useEffect(() => {
+        if (album) {
+            const artistRef = db.collection('artists').doc(album?.artist);
+            artistRef.get().then(doc => {
+                const artist = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+                setArtist(artist);
+            });
+        }
+    }, [album]);
+
+    // Get album banner
     useEffect(() => {
         const storage = firebase.storage();
         const storageRef = storage.ref();
