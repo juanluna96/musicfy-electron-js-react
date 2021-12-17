@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { Loader } from 'semantic-ui-react';
 
 import firebase from '../../db/Firebase';
 import 'firebase/compat/firestore';
@@ -52,10 +53,33 @@ const Album = () => {
         }
     }, [album]);
 
+    if (!album || !artist || !banner) {
+        return <Loader active >Cargando</Loader>
+    }
+
     return (
-        <div>
-            <h2>Album individual</h2>
+        <div className="album">
+            <div className="album__header">
+                <HeaderAlbum artist={ artist } album={ album } banner={ banner } />
+            </div>
+            <div className="album__songs">
+                Canciones
+            </div>
         </div>
+    )
+}
+
+const HeaderAlbum = ({ album, banner, artist }) => {
+    return (
+        <>
+            <div className="album__header__banner" style={ { backgroundImage: `url(${banner})` } } />
+            <div className="album__header__info">
+                <h1>{ album.name }</h1>
+                <p>
+                    De <span>{ artist.name }</span>
+                </p>
+            </div>
+        </>
     )
 }
 
