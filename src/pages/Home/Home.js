@@ -40,8 +40,8 @@ const Home = ({ updateArtist, updateAlbum }) => {
         <>
             <BannerHome />
             <div className="home">
-                <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } />
-                <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } />
+                <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } path="artist" />
+                <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } path="album" />
             </div>
         </>
     )

@@ -9,7 +9,7 @@ import 'firebase/compat/storage';
 
 import './BasicSliderItems.scss';
 
-const BasicSliderItems = ({ title, list, folder }) => {
+const BasicSliderItems = ({ title, list, folder, path }) => {
 
     const settings = {
         dots: true,
@@ -33,7 +33,7 @@ const BasicSliderItems = ({ title, list, folder }) => {
             <Slider { ...settings }>
                 {
                     list.map(item => (
-                        <ImageItem key={ item.id } item={ item } folder={ folder } />
+                        <ImageItem key={ item.id } item={ item } folder={ folder } path={ path } />
                     ))
                 }
             </Slider>
@@ -41,7 +41,7 @@ const BasicSliderItems = ({ title, list, folder }) => {
     )
 }
 
-const ImageItem = ({ item, folder }) => {
+const ImageItem = ({ item, folder, path }) => {
     const [image, setImage] = useState(null);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const ImageItem = ({ item, folder }) => {
     }, [item]);
 
     return (
-        <Link to={ `/${folder}/${item.id}` }>
+        <Link to={ `/${path}/${item.id}` }>
             <div className="basic-slider-items__list-item">
                 <div className="avatar" style={ { backgroundImage: `url(${image})` } } />
                 <h3> { item.name } </h3>
