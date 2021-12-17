@@ -73,4 +73,28 @@
                 background-color: $primary-color-hover;
             }
         }
+        .ui.dropdown {
+            background-color: $background-gray-light;
+            font-size: 16px;
+            color: $font-light;
+            border: 0;
+            .search {
+                color: $font-light;
+            }
+            .menu {
+                background-color: $background-gray-light;
+                color: $font-light;
+                border: 0;
+                .item {
+                    border-color: $border-light-dark;
+                    color: $font-gray;
+                    transition: all 0.3s ease-in-out;
+                    &:hover {
+                        background-color: $background-gray-light-hover;
+                        color: $font-light;
+                        border: 0;
+                    }
+                }
+            }
+        }
     }

@@ -6,8 +6,9 @@ import AddArtistForm from '../../Artists/AddArtistForm';
 
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
+import AddAlbumForm from '../../Albumns/AddAlbumnForm/AddAlbumForm';
 
-const Menuleft = ({ user, setUpdateArtist }) => {
+const Menuleft = ({ user, setUpdateArtist, setUpdateAlbum }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -22,12 +23,35 @@ const Menuleft = ({ user, setUpdateArtist }) => {
             content: <AddArtistForm setUpdateArtist={ setUpdateArtist } setShowModal={ setShowModal } />,
         },
         {
+            title: 'Nuevo album',
+            content: <AddAlbumForm setShowModal={ setShowModal } setUpdateAlbum={ setUpdateAlbum } />,
+        },
+        {
             title: 'Nueva canción',
             content: <div>
                 <p>Nombre de la canción</p>
             </div>,
         }
     ]
+
+    const routes = [
+        {
+            name: 'Inicio',
+            path: '/',
+            icon: 'home'
+        },
+        {
+            name: 'Artistas',
+            path: '/artists',
+            icon: 'users',
+        },
+        {
+            name: 'Albums',
+            path: '/albums',
+            icon: 'music',
+        }
+    ]
+
 
     useEffect(() => {
         isUserAdmin(user.uid).then(admin => {
@@ -53,12 +77,21 @@ const Menuleft = ({ user, setUpdateArtist }) => {
         <>
             <Menu className="menu-left" vertical>
                 <div className="top">
-                    <Menu.Item as={ Link } to="/" active={ activeMenu === '/' } onClick={ handleMenu } name="home">
-                        <Icon name="home" />Inicio
-                    </Menu.Item>
-                    <Menu.Item as={ Link } to="/artists" active={ activeMenu === '/artists' } onClick={ handleMenu } name="artists" >
-                        <Icon name="music" />Artistas
-                    </Menu.Item>
+                    {
+                        routes.map(route => (
+                            <Menu.Item
+                                key={ route.name }
+                                name={ route.name }
+                                active={ activeMenu === route.path }
+                                onClick={ handleMenu }
+                                as={ Link }
+                                to={ route.path }
+                            >
+                                { route.name }
+                                <Icon name={ route.icon } />
+                            </Menu.Item>
+                        ))
+                    }
                 </div>
                 <div className="footer">
                     {

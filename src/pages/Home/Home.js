@@ -8,8 +8,9 @@ import './Home.scss';
 
 const db = firebase.firestore(firebase);
 
-const Home = ({ updateArtist }) => {
+const Home = ({ updateArtist, updateAlbum }) => {
     const [artists, setArtists] = useState([]);
+    const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
         db.collection('artists').get().then(snapshot => {
@@ -23,11 +24,24 @@ const Home = ({ updateArtist }) => {
         });
     }, [updateArtist]);
 
+    useEffect(() => {
+        db.collection('albums').get().then(snapshot => {
+            const data = snapshot?.docs.map(doc => (
+                {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            ));
+            setAlbums(data);
+        });
+    }, [updateAlbum]);
+
     return (
         <>
             <BannerHome />
             <div className="home">
-                <BasicSliderItems title="Ultimos artistas" artists={ artists } />
+                <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } path="artist" />
+                <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } path="album" />
             </div>
         </>
     )

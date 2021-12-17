@@ -9,11 +9,11 @@ import 'firebase/compat/storage';
 
 import './BasicSliderItems.scss';
 
-const BasicSliderItems = ({ title, artists }) => {
+const BasicSliderItems = ({ title, list, folder, path }) => {
 
     const settings = {
         dots: true,
-        infinite: artists.length > 5,
+        infinite: list.length > 5,
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 1,
@@ -23,13 +23,17 @@ const BasicSliderItems = ({ title, artists }) => {
         pauseOnHover: true,
     };
 
+    if (list.length === 0) {
+        return null;
+    }
+
     return (
         <div className="basic-slider-items">
             <h2> { title } </h2>
             <Slider { ...settings }>
                 {
-                    artists.map(artist => (
-                        <ArtistItem key={ artist.id } artist={ artist } />
+                    list.map(item => (
+                        <ImageItem key={ item.id } item={ item } folder={ folder } path={ path } />
                     ))
                 }
             </Slider>
@@ -37,23 +41,23 @@ const BasicSliderItems = ({ title, artists }) => {
     )
 }
 
-const ArtistItem = ({ artist }) => {
+const ImageItem = ({ item, folder, path }) => {
     const [image, setImage] = useState(null);
 
     useEffect(() => {
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const imageRef = storageRef.child(`artists/${artist.banner}`);
+        const imageRef = storageRef.child(`${folder}/${item.banner}`);
         imageRef.getDownloadURL().then(url => {
             setImage(url);
         });
-    }, [artist]);
+    }, [item]);
 
     return (
-        <Link to={ `/artist/${artist.id}` }>
+        <Link to={ `/${path}/${item.id}` }>
             <div className="basic-slider-items__list-item">
                 <div className="avatar" style={ { backgroundImage: `url(${image})` } } />
-                <h3> { artist.name } </h3>
+                <h3> { item.name } </h3>
             </div>
         </Link>
     )

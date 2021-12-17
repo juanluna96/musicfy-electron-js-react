@@ -15,4 +15,19 @@
             padding: 0;
         }
     }
+    .content {
+        overflow-y: scroll;
+        height: calc(100vh - 105px);
+        overflow-x: hidden;
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $primary-color-hover;
+            transition: background 0.2s ease-in-out;
+            &:hover {
+                background: $primary-color;
+            }
+        }
+    }
 }
