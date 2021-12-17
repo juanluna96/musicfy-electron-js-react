@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import BannerArtist from './BannerArtist';
+import AlbumByArtist from './AlbumByArtist';
 import firebase from '../../db/Firebase'
 import 'firebase/compat/firestore';
 
@@ -14,7 +15,7 @@ const Artist = () => {
 
     useEffect(() => {
         db.collection('artists').doc(id).get().then(doc => {
-            console.log(doc)
+            console.log(doc.data());
             setArtist(doc.data());
         })
     }, [id]);
@@ -23,7 +24,14 @@ const Artist = () => {
         <div className="artist">
             {
                 artist &&
-                <BannerArtist artist={ artist } />
+                <>
+                    <BannerArtist artist={ artist } />
+                    {
+                        artist.albums?.map(album => {
+                            return <AlbumByArtist albumId={ album } key={ album } />
+                        })
+                    }
+                </>
             }
             <h2>Mas informacion...</h2>
         </div>
