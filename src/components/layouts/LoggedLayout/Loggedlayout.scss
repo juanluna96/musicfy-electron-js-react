@@ -6,7 +6,10 @@
     >.row {
         padding: 0;
         &:first-of-type {
-            height: 85vh;
+            height: 90vh;
+            .three.wide.column {
+                height: 100%;
+            }
         }
         &:last-of-type {
             height: 10vh;

@@ -7,6 +7,7 @@ import "./Loggedlayout.scss"
 import RouterComponent from '../../../routes/Routes';
 import Menuleft from '../../Menu/Left';
 import TopBar from '../../TopBar';
+import Player from '../../Player/Player';
 
 const Loggedlayout = ({ user, setReloadApp }) => {
     const [updateArtist, setUpdateArtist] = useState(false);
@@ -26,7 +27,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column width={ 16 }>
-                        <h2>Player</h2>
+                        <Player />
                     </Grid.Column>
                 </  Grid.Row>
             </Grid>
