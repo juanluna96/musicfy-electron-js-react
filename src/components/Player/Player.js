@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactPlayer from 'react-player';
 import { Grid, Progress, Icon, Input, Image } from 'semantic-ui-react';
 
@@ -17,6 +17,10 @@ const Player = () => {
         muted: false,
     }
 
+    const [playedSeconds, setPlayedSeconds] = useState(100);
+    const [totalSeconds, setTotalSeconds] = useState(120);
+    const [playing, setPlaying] = useState(false);
+
     return (
         <div className="player">
             <Grid>
@@ -25,7 +29,19 @@ const Player = () => {
                     { songData?.name }
                 </Grid.Column>
                 <Grid.Column width={ 8 } className="center">
-                    <h2>Center</h2>
+                    <div className="controls">
+                        {
+                            playing
+                                ? <Icon name="pause circle outline" size="big" onClick={ () => setPlaying(false) } />
+                                : <Icon name="play circle outline" size="big" onClick={ () => setPlaying(true) } />
+                        }
+                    </div>
+                    <Progress
+                        progress='value'
+                        value={ playedSeconds }
+                        total={ totalSeconds }
+                        size='tiny'
+                    />
                 </Grid.Column>
                 <Grid.Column width={ 4 } className="right">
                     <h2>Right</h2>
