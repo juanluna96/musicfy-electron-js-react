@@ -46,6 +46,7 @@
             width: 100%;
             margin: 0;
             .bar {
+                background-color: $background-primary;
                 min-width: 0%;
                 .progress {
                     display: none;
