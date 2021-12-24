@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ReactPlayer from 'react-player';
+import "semantic-ui-css/semantic.min.css";
+import { Slider } from "react-semantic-ui-range";
 import { Grid, Progress, Icon, Input, Image } from 'semantic-ui-react';
 
 
@@ -17,9 +19,19 @@ const Player = () => {
         muted: false,
     }
 
+    const settings = {
+        start: 2,
+        min: 0,
+        max: 10,
+        step: 0.01,
+        onChange: value => {
+            setVolume(value);
+        }
+    };
+
     const [playedSeconds, setPlayedSeconds] = useState(100);
     const [totalSeconds, setTotalSeconds] = useState(120);
-    const [volume, setVolume] = useState(0.5);
+    const [volume, setVolume] = useState(5);
     const [playing, setPlaying] = useState(false);
 
     return (
@@ -45,18 +57,14 @@ const Player = () => {
                     />
                 </Grid.Column>
                 <Grid.Column width={ 4 } className="right">
-                    <Input
-                        type='range'
-                        label={ <Icon name='volume up' /> }
-                        min={ 0 }
-                        max={ 1 }
-                        step={ 0.01 }
-                        value={ volume }
-                        name='volume'
-                        discrete="true"
-                        color="red"
-                        onChange={ (e, { value }) => setVolume(value) }
-                    />
+                    <Grid>
+                        <Grid.Column width={ 2 }>
+                            <VolumeIcon volume={ volume } />
+                        </Grid.Column>
+                        <Grid.Column width={ 14 }>
+                            <Slider value={ volume } color="green" settings={ settings } />
+                        </Grid.Column>
+                    </Grid>
                 </Grid.Column>
             </Grid>
         </div>
@@ -64,3 +72,14 @@ const Player = () => {
 }
 
 export default Player
+
+const VolumeIcon = ({ volume }) => {
+    if (volume > 5) {
+        return <Icon name='volume up' />
+    } else if (volume > 0.01) {
+        return <Icon name='volume down' />
+    } else {
+        return <Icon name='volume off' />
+    }
+}
+

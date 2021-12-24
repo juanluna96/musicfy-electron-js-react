@@ -13,11 +13,11 @@
         margin: 0;
     }
     .left {
-        display: flex!important;
+        display: flex !important;
         align-items: center;
         font-size: 16px;
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
         img {
             width: 100px;
             height: 70px;
@@ -26,7 +26,7 @@
         }
     }
     .center {
-        display: flex!important;
+        display: flex !important;
         align-items: center;
         flex-direction: column;
         .controls {
@@ -54,22 +54,7 @@
         }
     }
     .right {
-        display: flex!important;
-        align-items: center;
-        font-size: 16px;
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        display: flex !important;
         justify-content: flex-end;
-        .ui.input {
-            i {
-                color: $font-gray;
-                margin-right: 15px;
-            }
-            input {
-                width: 100px;
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
     }
 }
