@@ -11,7 +11,7 @@ const Player = () => {
     const songData = {
         name: 'Efectos vocales',
         image: 'https://firebasestorage.googleapis.com/v0/b/musicfy-cfb06.appspot.com/o/albums%2F61e98ecb-ade4-4910-88e8-dee0ab8220e1?alt=media&token=fe8e1352-cf8a-4536-9bd8-ca3ab3a5d8d5',
-        url: '',
+        url: 'https://www.youtube.com/watch?v=ysz5S6PUM-U',
         duration: 0,
         currentTime: 0,
         playing: false,
@@ -33,6 +33,11 @@ const Player = () => {
     const [totalSeconds, setTotalSeconds] = useState(120);
     const [volume, setVolume] = useState(5);
     const [playing, setPlaying] = useState(false);
+
+    const onProgress = (state) => {
+        setPlayedSeconds(state.playedSeconds);
+        setTotalSeconds(state.playedSeconds);
+    }
 
     return (
         <div className="player">
@@ -66,6 +71,15 @@ const Player = () => {
                         </Grid.Column>
                     </Grid>
                 </Grid.Column>
+                <ReactPlayer
+                    className="react-player"
+                    url={ songData?.url }
+                    height="0"
+                    width="0"
+                    playing={ playing }
+                    volume={ volume }
+                    onProgress={ onProgress }
+                />
             </Grid>
         </div>
     )
