@@ -19,6 +19,7 @@ const Player = () => {
 
     const [playedSeconds, setPlayedSeconds] = useState(100);
     const [totalSeconds, setTotalSeconds] = useState(120);
+    const [volume, setVolume] = useState(0.5);
     const [playing, setPlaying] = useState(false);
 
     return (
@@ -44,7 +45,18 @@ const Player = () => {
                     />
                 </Grid.Column>
                 <Grid.Column width={ 4 } className="right">
-                    <h2>Right</h2>
+                    <Input
+                        type='range'
+                        label={ <Icon name='volume up' /> }
+                        min={ 0 }
+                        max={ 1 }
+                        step={ 0.01 }
+                        value={ volume }
+                        name='volume'
+                        discrete="true"
+                        color="red"
+                        onChange={ (e, { value }) => setVolume(value) }
+                    />
                 </Grid.Column>
             </Grid>
         </div>
