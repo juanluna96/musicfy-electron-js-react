@@ -2,10 +2,11 @@
 .albums {
     margin: 50px;
     >h1 {
-        border-bottom: 1px solid $border-gray-light;
-        margin-bottom: 50px;
+        border-bottom: 2px solid $border-gray-light;
+        margin-bottom: 40px;
         padding-bottom: 10px;
-        font-size: 1.5em;
+        color: $font-gray;
+        font-size: 35px;
     }
     &__item {
         text-align: center;

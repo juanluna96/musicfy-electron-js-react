@@ -1,0 +1,61 @@
+@import '../../scss';
+.player {
+    color: $font-gray;
+    position: relative;
+    height: 100%;
+    background-color: $background-gray-medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .ui.grid {
+        width: 100%;
+        margin: 0;
+    }
+    .left {
+        display: flex !important;
+        align-items: center;
+        font-size: 16px;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        img {
+            width: 100px;
+            height: 70px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    }
+    .center {
+        display: flex !important;
+        align-items: center;
+        flex-direction: column;
+        .controls {
+            margin-bottom: 10px;
+            i {
+                font-size: 35px;
+                margin-right: 10px;
+                color: $font-light;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                &:hover {
+                    color: $font-gray;
+                }
+            }
+        }
+        .ui.progress {
+            width: 100%;
+            margin: 0;
+            .bar {
+                background-color: $background-primary;
+                min-width: 0%;
+                .progress {
+                    display: none;
+                }
+            }
+        }
+    }
+    .right {
+        display: flex !important;
+        justify-content: flex-end;
+    }
+}
