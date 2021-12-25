@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Icon, Dropdown, Label } from 'semantic-ui-react';
+import firebase from '../../../db/Firebase';
 
 import './AddSongForm.scss';
 
-const AddSongForm = ({ showModal }) => {
+const db = firebase.firestore();
 
-    const albums = [
-        { key: 'af', value: 'af', text: 'Afghanistan' },
-        { key: 'ax', value: 'ax', text: 'Aland Islands' },
-        { key: 'al', value: 'al', text: 'Albania' }
-    ]
+const AddSongForm = ({ setShowModal }) => {
+
+    const [albums, setAlbums] = useState([]);
+
+    useEffect(() => {
+        db.collection('albums').get().then(snapshot => {
+            const albums = [];
+            snapshot.forEach(doc => {
+                albums.push({
+                    key: doc.id,
+                    value: doc.id,
+                    text: doc.data().name
+                })
+            })
+            setAlbums(albums);
+        })
+    }, [])
 
     const onSubmit = () => {
         console.log('Submit');
@@ -21,7 +34,7 @@ const AddSongForm = ({ showModal }) => {
                 <Input placeholder='Nombre de la cancion' />
             </Form.Field>
             <Form.Field>
-                <Dropdown placeholder='Asigna la cancion a un album' search lazyload fluid selection options={ albums } />
+                <Dropdown placeholder='Asigna la cancion a un album' noResultsMessage="No se encontraron albums" search lazyload fluid selection options={ albums } />
             </Form.Field>
             <Form.Field>
                 <Label>Subir cancion dropzone</Label>
