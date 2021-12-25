@@ -33,9 +33,6 @@ const Loggedlayout = ({ user, setReloadApp }) => {
             <Grid className="logged-layout">
                 <Grid.Row>
                     <Grid.Column width={ 3 }>
-                        <button onClick={ () => playerSong(song.image, song.name, song.url) }>
-                            Iniciar cancion
-                        </button>
                         <Menuleft setUpdateArtist={ setUpdateArtist } setUpdateAlbum={ setUpdateAlbum } user={ user } />
                     </Grid.Column>
                     <Grid.Column className="content" width={ 13 }>
