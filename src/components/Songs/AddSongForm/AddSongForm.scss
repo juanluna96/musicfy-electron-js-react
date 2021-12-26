@@ -1,0 +1,40 @@
+@import '../../../scss/';
+.ui.form.add-song-form {
+    .ui.grid {
+        .song-upload {
+            height: 100%;
+            width: 100%;
+            background-color: $background-gray-light;
+            display: flex;
+            border-radius: 5px;
+            align-items: center;
+            padding: 5px 0px;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                cursor: pointer;
+                background-color: $background-gray-dark;
+            }
+            i {
+                height: 100%;
+                font-size: 40px;
+                &.loaded {
+                    color: $primary-color;
+                }
+            }
+            >div {
+                p {
+                    margin: 0;
+                    &:first-of-type {
+                        margin-bottom: 5px;
+                    }
+                    span {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+}
