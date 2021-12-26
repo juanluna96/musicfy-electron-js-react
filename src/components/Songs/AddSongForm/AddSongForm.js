@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Form, Input, Button, Icon, Dropdown, Label, Grid } from 'semantic-ui-react';
+import { toast } from 'react-toastify';
+
 import firebase from '../../../db/Firebase';
 
 import './AddSongForm.scss';
@@ -9,7 +11,6 @@ const db = firebase.firestore();
 
 const defaultFormSong = {
     name: '',
-    banner: '',
     album: ''
 };
 
@@ -17,6 +18,7 @@ const AddSongForm = ({ setShowModal }) => {
 
     const [albums, setAlbums] = useState([]);
     const [formData, setFormData] = useState(defaultFormSong);
+    const [loading, setLoading] = useState(false);
     const [file, setFile] = useState(null);
 
     useEffect(() => {
@@ -52,7 +54,18 @@ const AddSongForm = ({ setShowModal }) => {
     };
 
     const onSubmit = () => {
-        console.log(formData);
+        // Validate the form of new album
+        if (formData.name === '' || formData.album === '') {
+            toast.warning('El nombre de la cancion y el album al que pertenecen son obligatorios');
+            return;
+        }
+
+        if (!file) {
+            toast.warning('La cancion es obligatoria');
+            return;
+        }
+
+        setLoading(true);
     }
 
     return (
@@ -81,7 +94,7 @@ const AddSongForm = ({ setShowModal }) => {
                     </Form.Field>
                 </Grid.Column>
             </Grid>
-            <Button type='submit' content='Agregar cancion' />
+            <Button type='submit' content='Agregar cancion' loading={ loading } />
         </Form>
     )
 }
