@@ -7,9 +7,16 @@ import './AddSongForm.scss';
 
 const db = firebase.firestore();
 
+const defaultFormSong = {
+    name: '',
+    banner: '',
+    album: ''
+};
+
 const AddSongForm = ({ setShowModal }) => {
 
     const [albums, setAlbums] = useState([]);
+    const [formData, setFormData] = useState(defaultFormSong);
     const [file, setFile] = useState(null);
 
     useEffect(() => {
@@ -36,8 +43,16 @@ const AddSongForm = ({ setShowModal }) => {
         onDrop
     });
 
+    // Get data from form in input and dropdown
+    const onChange = (e, { name, value }) => {
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
     const onSubmit = () => {
-        console.log('Submit');
+        console.log(formData);
     }
 
     return (
@@ -59,10 +74,10 @@ const AddSongForm = ({ setShowModal }) => {
                 </Grid.Column>
                 <Grid.Column width={ 9 }>
                     <Form.Field>
-                        <Input placeholder='Nombre de la cancion' />
+                        <Input placeholder='Nombre de la cancion' name='name' onChange={ onChange } />
                     </Form.Field>
                     <Form.Field>
-                        <Dropdown placeholder='Asigna la cancion a un album' noResultsMessage="No se encontraron albums" search lazyload fluid selection options={ albums } />
+                        <Dropdown name='album' placeholder='Asigna la cancion a un album' onChange={ onChange } noResultsMessage="No se encontraron albums" search lazyload fluid selection options={ albums } />
                     </Form.Field>
                 </Grid.Column>
             </Grid>
