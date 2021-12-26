@@ -15,7 +15,7 @@ const defaultFormSong = {
     album: ''
 };
 
-const AddSongForm = ({ setShowModal }) => {
+const AddSongForm = ({ setShowModal, setUpdateSong }) => {
 
     const [albums, setAlbums] = useState([]);
     const [formData, setFormData] = useState(defaultFormSong);
@@ -77,6 +77,7 @@ const AddSongForm = ({ setShowModal }) => {
                 db.collection('songs').add({
                     name: formData.name,
                     album: formData.album,
+                    createdAt: new Date(),
                     url
                 }).then(() => {
                     toast.success('Cancion agregada correctamente');
@@ -93,6 +94,7 @@ const AddSongForm = ({ setShowModal }) => {
     const resetStates = () => {
         setFormData(defaultFormSong);
         setFile(null);
+        setUpdateSong(prevState => !prevState);
         setShowModal(false);
     }
 
