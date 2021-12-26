@@ -2,10 +2,11 @@ import React from 'react'
 
 import './SongsSlider.scss';
 
-const SongsSlider = () => {
+const SongsSlider = ({ title, data }) => {
     return (
-        <div>
-
+        <div className='songs-slider'>
+            <h2>{ title }</h2>
+            <p>Slider</p>
         </div>
     )
 }

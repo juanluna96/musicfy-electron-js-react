@@ -1,1 +1,10 @@
-@import '../../../scss/'
+@import '../../../scss/';
+.songs-slider {
+    margin: 50px 0;
+    >h2 {
+        border-bottom: 1px solid $border-gray-light;
+        padding-bottom: 10px;
+        font-size: 25px;
+        color: $font-gray;
+    }
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import BannerHome from '../../components/layouts/BannerHome';
 import BasicSliderItems from '../../components/Sliders/BasicSliderItems';
+import SongsSlider from '../../components/Songs/SongsSlider';
 import firebase from '../../db/Firebase';
 import 'firebase/compat/firestore';
 
@@ -56,7 +57,7 @@ const Home = ({ updateArtist, updateAlbum, updateSong }) => {
             <div className="home">
                 <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } path="artist" />
                 <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } path="album" />
-                <BasicSliderItems title="Ultimas canciones" folder="songs" list={ songs } path="song" />
+                <SongsSlider title="Ultimas canciones" data={ songs } />
             </div>
         </>
     )
