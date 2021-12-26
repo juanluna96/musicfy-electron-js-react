@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Form, Input, Button, Icon, Dropdown, Label, Grid } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
+import { v4 as uuid } from 'uuid';
 
 import firebase from '../../../db/Firebase';
 
@@ -66,6 +67,33 @@ const AddSongForm = ({ setShowModal }) => {
         }
 
         setLoading(true);
+
+        // Save the song in the database and update the file
+        const storageRef = firebase.storage().ref();
+        const fileRef = storageRef.child(`songs/${uuid()}`);
+
+        fileRef.put(file).then(() => {
+            fileRef.getDownloadURL().then(url => {
+                db.collection('songs').add({
+                    name: formData.name,
+                    album: formData.album,
+                    url
+                }).then(() => {
+                    toast.success('Cancion agregada correctamente');
+                    resetStates();
+                }).catch(() => {
+                    toast.error('Error al agregar la cancion');
+                }).finally(() => {
+                    setLoading(false);
+                });
+            });
+        });
+    }
+
+    const resetStates = () => {
+        setFormData(defaultFormSong);
+        setFile(null);
+        setShowModal(false);
     }
 
     return (
