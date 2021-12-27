@@ -27,7 +27,7 @@ const Player = ({ songData }) => {
     const settings_progress = {
         start: 0,
         min: 0,
-        max: totalSeconds,
+        max: playerRef.current ? playerRef.current.getDuration() : 0,
         step: 1,
         onChange: value => {
             playerRef.current.seekTo(value);
@@ -78,6 +78,7 @@ const Player = ({ songData }) => {
                         { songData && <Icon name="redo alternate" size="big" onClick={ () => moveTime('fwd') } /> }
                     </div>
                     <Slider
+                        ref={ playerRef }
                         style={ {
                             thumb: {
                                 width: "0px",
@@ -85,7 +86,7 @@ const Player = ({ songData }) => {
                             }
                         } }
                         disabled={ !songData }
-                        value={ playedSeconds }
+                        value={ playerRef.current ? playerRef.current.getCurrentTime() : 0 }
                         color="green"
                         settings={ settings_progress } />
                 </Grid.Column>
