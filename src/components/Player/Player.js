@@ -77,7 +77,6 @@ const Player = ({ songData, playerSong }) => {
 
     // Get the next song of the album
     const getNextSongOfAlbum = async (albumId) => {
-        console.log(albumId);
         return await db.collection('songs').where('album', '==', albumId).get().then(snapshot => {
             const songs = [];
             snapshot.docs.map(doc => {
@@ -96,17 +95,18 @@ const Player = ({ songData, playerSong }) => {
         // Get next song of the same album
         const song = await getSongInfo(songData.id);
         // Get songs that are in the same album
-        let [next_song] = await getNextSongOfAlbum(song.album);
-        console.log(next_song);
-        // Set the next song
-        playerSong(next_song.id, songData.image, next_song.name, next_song.url);
+        const songs_array = await getNextSongOfAlbum(song.album);
+        if (songs_array.length > 0) {
+            // Set the next song
+            const random_song = songs_array[Math.floor(Math.random() * songs_array.length)];
+            playerSong(random_song.id, songData.image, random_song.name, random_song.url);
+        }
     }
 
-    const moveSong = (movement) => {
-        // Save the last song played
-
+    const moveSong = async (movement) => {
         switch (movement) {
             case 'forward':
+                // Save the last song played
                 setLastSong({
                     id: songData.id,
                     image: songData.image,
