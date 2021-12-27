@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 import "semantic-ui-css/semantic.min.css";
 import { Slider } from "react-semantic-ui-range";
 import { Grid, Progress, Icon, Input, Image } from 'semantic-ui-react';
+import moment from 'moment';
 import firebase from '../../db/Firebase';
 import 'firebase/compat/storage';
 import 'firebase/compat/firestore';
@@ -91,15 +92,31 @@ const Player = ({ songData, playerSong }) => {
         });
     }
 
+    // Get artist of the album
+    const getArtistOfAlbum = async (albumId) => {
+        return await db.collection('artists').where('albums', 'array-contains', albumId).get().then(snapshot => {
+            const artists = [];
+            snapshot.docs.map(doc => {
+                artists.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+            });
+            return artists;
+        });
+    }
+
     const playRandomSong = async () => {
         // Get next song of the same album
         const song = await getSongInfo(songData.id);
         // Get songs that are in the same album
         const songs_array = await getNextSongOfAlbum(song.album);
         if (songs_array.length > 0) {
+            // Get album artist
+            const [artist] = await getArtistOfAlbum(song.album);
             // Set the next song
             const random_song = songs_array[Math.floor(Math.random() * songs_array.length)];
-            playerSong(random_song.id, songData.image, random_song.name, random_song.url);
+            playerSong(random_song.id, songData.image, random_song.name, random_song.url, artist.name);
         }
     }
 
@@ -111,7 +128,8 @@ const Player = ({ songData, playerSong }) => {
                     id: songData.id,
                     image: songData.image,
                     name: songData.name,
-                    url: songData.url
+                    url: songData.url,
+                    artist_name: songData.artist_name
                 });
                 // Play other song of the same album
                 playRandomSong();
@@ -131,6 +149,11 @@ const Player = ({ songData, playerSong }) => {
         }
     }
 
+    const secondsToMinutes = () => {
+        const formatted = moment.utc(totalSeconds * 1000).format('mm:ss');
+        return formatted;
+    }
+
     const onProgress = (state) => {
         setPlayedSeconds(state.playedSeconds);
         setTotalSeconds(state.loadedSeconds);
@@ -143,8 +166,14 @@ const Player = ({ songData, playerSong }) => {
                     {
                         songData &&
                         <>
-                            <Image src={ songData?.image } />
-                            { songData?.name }
+                            <div className="player__image">
+                                <Image src={ songData.image } />
+                            </div>
+                            <div className="song-info">
+                                <p>{ songData?.name }</p>
+                                <p>{ songData?.artist_name }</p>
+                                <p>{ secondsToMinutes() }</p>
+                            </div>
                         </>
                     }
                 </Grid.Column>

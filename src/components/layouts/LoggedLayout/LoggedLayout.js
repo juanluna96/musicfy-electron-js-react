@@ -15,12 +15,13 @@ const Loggedlayout = ({ user, setReloadApp }) => {
     const [updateSong, setUpdateSong] = useState(false);
     const [songData, setSongData] = useState(null);
 
-    const playerSong = (id, image, name, url) => {
+    const playerSong = (id, image, name, url, artist_name) => {
         setSongData({
             id,
             image,
             name,
-            url
+            url,
+            artist_name
         });
     }
 

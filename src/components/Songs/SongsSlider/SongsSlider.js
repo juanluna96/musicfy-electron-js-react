@@ -46,6 +46,7 @@ const SongsSlider = ({ playerSong, title, data }) => {
 const SongItem = ({ song, playerSong }) => {
     const [albumImage, setAlbumImage] = useState(null);
     const [album, setAlbum] = useState(null);
+    const [artist, setArtist] = useState(null);
 
     // Get album of the song
     useEffect(() => {
@@ -70,8 +71,21 @@ const SongItem = ({ song, playerSong }) => {
         }
     }, [album]);
 
+    // Get artist of the album
+    useEffect(() => {
+        if (album) {
+            db.collection('artists').doc(album.artist).get().then(doc => {
+                const artist_obj = {
+                    id: doc.id,
+                    ...doc.data()
+                }
+                setArtist(artist_obj);
+            });
+        }
+    }, [album]);
+
     const onPlay = () => {
-        playerSong(song.id, albumImage, song.name, song.url);
+        playerSong(song.id, albumImage, song.name, song.url, artist.name);
     }
 
     return (
