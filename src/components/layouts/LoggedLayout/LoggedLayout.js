@@ -15,8 +15,9 @@ const Loggedlayout = ({ user, setReloadApp }) => {
     const [updateSong, setUpdateSong] = useState(false);
     const [songData, setSongData] = useState(null);
 
-    const playerSong = (image, name, url) => {
+    const playerSong = (id, image, name, url) => {
         setSongData({
+            id,
             image,
             name,
             url
@@ -43,7 +44,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column width={ 16 }>
-                        <Player songData={ songData } />
+                        <Player playerSong={ playerSong } songData={ songData } />
                     </Grid.Column>
                 </  Grid.Row>
             </Grid>

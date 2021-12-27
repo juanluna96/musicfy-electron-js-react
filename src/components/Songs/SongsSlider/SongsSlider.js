@@ -71,7 +71,7 @@ const SongItem = ({ song, playerSong }) => {
     }, [album]);
 
     const onPlay = () => {
-        playerSong(albumImage, song.name, song.url);
+        playerSong(song.id, albumImage, song.name, song.url);
     }
 
     return (
