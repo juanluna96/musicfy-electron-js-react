@@ -84,6 +84,7 @@ const Player = ({ songData }) => {
                                 height: "0px"
                             }
                         } }
+                        disabled={ !songData }
                         value={ playedSeconds }
                         color="green"
                         settings={ settings_progress } />
