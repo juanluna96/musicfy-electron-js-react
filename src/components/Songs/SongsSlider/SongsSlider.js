@@ -6,6 +6,8 @@ import 'firebase/compat/firestore';
 
 import './SongsSlider.scss';
 
+const db = firebase.firestore();
+
 const SongsSlider = ({ title, data }) => {
     const settings = {
         dots: false,
@@ -40,25 +42,34 @@ const SongsSlider = ({ title, data }) => {
 
 const SongItem = ({ song }) => {
     const [albumImage, setAlbumImage] = useState(null);
+    const [album, setAlbum] = useState(null);
 
-    // Get album of the song and get the image of the album
+    // Get album of the song
     useEffect(() => {
-        const db = firebase.firestore();
-        const albumRef = db.collection('albums').doc(song.album);
-        albumRef.get().then(doc => {
-            const album = doc.data();
+        db.collection('albums').doc(song.album).get().then(doc => {
+            const album_obj = {
+                id: doc.id,
+                ...doc.data()
+            }
+            setAlbum(album_obj);
+        });
+    }, [song]);
+
+    // Get album image
+    useEffect(() => {
+        if (album) {
             const storage = firebase.storage();
             const storageRef = storage.ref();
-            const imageRef = storageRef.child(`albums/${album.banner}`);
+            const imageRef = storageRef.child(`albums/${album?.banner}`);
             imageRef.getDownloadURL().then(url => {
                 setAlbumImage(url);
             });
-        });
-    }, []);
+        }
+    }, [album]);
 
     return (
         <div className='songs-slider__list-item'>
-            <div className='songs-slider__list-item-image' style={ { backgroundImage: `url(${albumImage})` } } />
+            <div className='songs-slider__list-item-image' style={ { backgroundImage: `url(${albumImage})`, height: 200 } } />
             <div className='songs-slider__list-item-info'>
                 <h3>{ song.name }</h3>
             </div>

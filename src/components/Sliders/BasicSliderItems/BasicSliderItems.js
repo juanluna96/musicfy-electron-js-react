@@ -45,12 +45,14 @@ const ImageItem = ({ item, folder, path }) => {
     const [image, setImage] = useState(null);
 
     useEffect(() => {
-        const storage = firebase.storage();
-        const storageRef = storage.ref();
-        const imageRef = storageRef.child(`${folder}/${item.banner}`);
-        imageRef.getDownloadURL().then(url => {
-            setImage(url);
-        });
+        if (item) {
+            const storage = firebase.storage();
+            const storageRef = storage.ref();
+            const imageRef = storageRef.child(`${folder}/${item?.banner}`);
+            imageRef.getDownloadURL().then(url => {
+                setImage(url);
+            });
+        }
     }, [item]);
 
     return (
