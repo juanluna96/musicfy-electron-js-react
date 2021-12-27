@@ -21,6 +21,7 @@ const Player = ({ songData }) => {
 
     const [playedSeconds, setPlayedSeconds] = useState(0);
     const [totalSeconds, setTotalSeconds] = useState(0);
+    const [secondsLeft, setSecondsLeft] = useState(0);
     const [volume, setVolume] = useState(1);
     const [playing, setPlaying] = useState(false);
 
@@ -29,10 +30,20 @@ const Player = ({ songData }) => {
         min: 0,
         max: playerRef.current ? playerRef.current.getDuration() : 0,
         step: 1,
-        onChange: value => {
+        onChange: value => onChangeSlider(value)
+    };
+
+    const onChangeSlider = (value) => {
+        // Get the time left between slider and the states given by react player
+        const timeDifference = parseInt(playerRef.current.getDuration() - value);
+        const timeLeft = parseInt(totalSeconds - playedSeconds);
+        // Calculate the bit rate between 2 times
+        const timeMoved = parseFloat((timeLeft / timeDifference).toFixed(2));
+        if (timeMoved >= 1.1 || timeMoved < 0.9) {
+            console.log(timeMoved)
             playerRef.current.seekTo(value);
         }
-    };
+    }
 
     useEffect(() => {
         if (songData) {
@@ -77,18 +88,20 @@ const Player = ({ songData }) => {
                         }
                         { songData && <Icon name="redo alternate" size="big" onClick={ () => moveTime('fwd') } /> }
                     </div>
-                    <Slider
-                        ref={ playerRef }
-                        style={ {
-                            thumb: {
-                                width: "0px",
-                                height: "0px"
-                            }
-                        } }
-                        disabled={ !songData }
-                        value={ playerRef.current ? playerRef.current.getCurrentTime() : 0 }
-                        color="green"
-                        settings={ settings_progress } />
+                    <div>
+                        <Slider
+                            ref={ playerRef }
+                            style={ {
+                                thumb: {
+                                    width: "0px",
+                                    height: "0px"
+                                }
+                            } }
+                            disabled={ !songData }
+                            value={ playerRef.current ? playerRef.current.getCurrentTime() : 0 }
+                            color="green"
+                            settings={ settings_progress } />
+                    </div>
                 </Grid.Column>
                 <Grid.Column width={ 4 } className="right">
                     {
