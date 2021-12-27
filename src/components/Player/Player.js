@@ -24,6 +24,16 @@ const Player = ({ songData }) => {
     const [volume, setVolume] = useState(1);
     const [playing, setPlaying] = useState(false);
 
+    const settings_progress = {
+        start: 0,
+        min: 0,
+        max: totalSeconds,
+        step: 1,
+        onChange: value => {
+            playerRef.current.seekTo(value);
+        }
+    };
+
     useEffect(() => {
         if (songData) {
             setPlaying(true);
@@ -67,12 +77,16 @@ const Player = ({ songData }) => {
                         }
                         { songData && <Icon name="redo alternate" size="big" onClick={ () => moveTime('fwd') } /> }
                     </div>
-                    <Progress
-                        progress='value'
+                    <Slider
+                        style={ {
+                            thumb: {
+                                width: "0px",
+                                height: "0px"
+                            }
+                        } }
                         value={ playedSeconds }
-                        total={ totalSeconds }
-                        size='tiny'
-                    />
+                        color="green"
+                        settings={ settings_progress } />
                 </Grid.Column>
                 <Grid.Column width={ 4 } className="right">
                     {

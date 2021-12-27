@@ -26,10 +26,10 @@
         }
     }
     .center {
-        display: flex !important;
-        align-items: center;
-        flex-direction: column;
         .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 10px;
             i {
                 font-size: 35px;
@@ -45,14 +45,10 @@
                 }
             }
         }
-        .ui.progress {
-            width: 100%;
-            margin: 0;
-            .bar {
-                background-color: $background-primary;
-                min-width: 0%;
-                .progress {
-                    display: none;
+        .semantic_ui_range_inner {
+            div {
+                &:first-of-type {
+                    background-color: $background-gray!important;
                 }
             }
         }
