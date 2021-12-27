@@ -9,7 +9,7 @@ import './Home.scss';
 
 const db = firebase.firestore(firebase);
 
-const Home = ({ updateArtist, updateAlbum, updateSong }) => {
+const Home = ({ playerSong, updateArtist, updateAlbum, updateSong }) => {
     const [artists, setArtists] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [songs, setSongs] = useState([]);
@@ -57,7 +57,7 @@ const Home = ({ updateArtist, updateAlbum, updateSong }) => {
             <div className="home">
                 <BasicSliderItems title="Ultimos artistas" folder="artists" list={ artists } path="artist" />
                 <BasicSliderItems title="Ultimos albumes" folder="albums" list={ albums } path="album" />
-                <SongsSlider title="Ultimas canciones" data={ songs } />
+                <SongsSlider playerSong={ playerSong } title="Ultimas canciones" data={ songs } />
             </div>
         </>
     )

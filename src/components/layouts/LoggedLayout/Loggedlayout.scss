@@ -23,6 +23,7 @@
         height: calc(100vh - 105px);
         overflow-x: hidden;
         &::-webkit-scrollbar {
+            display: none;
             width: 8px;
         }
         &::-webkit-scrollbar-thumb {

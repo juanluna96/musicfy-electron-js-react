@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ReactPlayer from 'react-player';
 import "semantic-ui-css/semantic.min.css";
 import { Slider } from "react-semantic-ui-range";
 import { Grid, Progress, Icon, Input, Image } from 'semantic-ui-react';
 
-
 import './Player.scss';
 
 const Player = ({ songData }) => {
+    const playerRef = useRef(null);
+
     const settings = {
         start: 1,
         min: 0,
@@ -29,6 +30,16 @@ const Player = ({ songData }) => {
         }
     }, [songData]);
 
+    const moveTime = (time) => {
+        if (time === 'back') {
+            // changes
+            playerRef.current.seekTo(playedSeconds - 5);
+        } else if (time === 'fwd') {
+            // changes
+            playerRef.current.seekTo(playedSeconds + 5);
+        }
+    };
+
     const onProgress = (state) => {
         setPlayedSeconds(state.playedSeconds);
         setTotalSeconds(state.loadedSeconds);
@@ -48,11 +59,13 @@ const Player = ({ songData }) => {
                 </Grid.Column>
                 <Grid.Column width={ 8 } className="center">
                     <div className="controls">
+                        { songData && <Icon name="undo alternate" size="big" onClick={ () => moveTime('back') } /> }
                         {
                             playing
                                 ? <Icon name="pause circle outline" size="big" onClick={ () => setPlaying(false) } />
                                 : <Icon name="play circle outline" size="big" onClick={ () => setPlaying(true) } />
                         }
+                        { songData && <Icon name="redo alternate" size="big" onClick={ () => moveTime('fwd') } /> }
                     </div>
                     <Progress
                         progress='value'
@@ -75,6 +88,7 @@ const Player = ({ songData }) => {
                     }
                 </Grid.Column>
                 <ReactPlayer
+                    ref={ playerRef }
                     className="react-player"
                     url={ songData?.url }
                     height="0"

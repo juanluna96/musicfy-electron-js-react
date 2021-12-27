@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
+
 import firebase from '../../../db/Firebase';
 import 'firebase/compat/storage';
 import 'firebase/compat/firestore';
 
 import './SongsSlider.scss';
+import { Icon } from 'semantic-ui-react';
 
 const db = firebase.firestore();
 
-const SongsSlider = ({ title, data }) => {
+const SongsSlider = ({ playerSong, title, data }) => {
     const settings = {
         dots: false,
-        infinite: data.length > 3,
+        infinite: data.length > 4,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 2,
         autoplay: true,
         autoplaySpeed: 2000,
@@ -32,7 +35,7 @@ const SongsSlider = ({ title, data }) => {
             <Slider { ...settings }>
                 {
                     data.map(song => (
-                        <SongItem key={ song.id } song={ song } />
+                        <SongItem key={ song.id } song={ song } playerSong={ playerSong } />
                     ))
                 }
             </Slider>
@@ -40,7 +43,7 @@ const SongsSlider = ({ title, data }) => {
     )
 }
 
-const SongItem = ({ song }) => {
+const SongItem = ({ song, playerSong }) => {
     const [albumImage, setAlbumImage] = useState(null);
     const [album, setAlbum] = useState(null);
 
@@ -67,11 +70,19 @@ const SongItem = ({ song }) => {
         }
     }, [album]);
 
+    const onPlay = () => {
+        playerSong(albumImage, song.name, song.url);
+    }
+
     return (
         <div className='songs-slider__list-item'>
-            <div className='songs-slider__list-item-image' style={ { backgroundImage: `url(${albumImage})`, height: 200 } } />
+            <div className='songs-slider__list-item-image' onClick={ onPlay } style={ { backgroundImage: `url(${albumImage})` } } >
+                <Icon name='play circle outline' />
+            </div>
             <div className='songs-slider__list-item-info'>
-                <h3>{ song.name }</h3>
+                <Link to={ `/album/${album?.id}` }>
+                    <h3>{ song.name }</h3>
+                </Link>
             </div>
         </div>
     )

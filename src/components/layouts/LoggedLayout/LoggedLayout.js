@@ -38,7 +38,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
                     </Grid.Column>
                     <Grid.Column className="content" width={ 13 }>
                         <TopBar user={ user } />
-                        <RouterComponent updateSong={ updateSong } updateArtist={ updateArtist } updateAlbum={ updateAlbum } user={ user } setReloadApp={ setReloadApp } />
+                        <RouterComponent playerSong={ playerSong } updateSong={ updateSong } updateArtist={ updateArtist } updateAlbum={ updateAlbum } user={ user } setReloadApp={ setReloadApp } />
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
