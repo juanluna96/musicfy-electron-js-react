@@ -13,6 +13,8 @@ const Artist = () => {
     const { id } = useParams();
     const [artist, setArtist] = useState(null);
     const [albums, setAlbums] = useState([]);
+    const [songs, setSongs] = useState([])
+    console.log(songs)
 
     useEffect(() => {
         db.collection('artists').doc(id).get().then(doc => {
@@ -33,6 +35,23 @@ const Artist = () => {
                 setAlbums(albums);
             })
         }
+    }, [artist]);
+
+    // Get songs of the artist
+    useEffect(() => {
+        const arraySongs = [];
+        (async () => {
+            await Promise.all(albums.map(async album => {
+                const songs = await db.collection('songs').where('album', '==', album.id).get();
+                songs.forEach(song => {
+                    arraySongs.push({
+                        id: song.id,
+                        ...song.data()
+                    })
+                })
+            }))
+            setSongs(arraySongs);
+        })();
     }, [artist]);
 
     return (
