@@ -118,9 +118,9 @@ const AddAlbumForm = ({ setUpdateAlbum }) => {
                     </div>
                 </Form.Field>
                 <Form.Field className="album-inputs" width={ 11 }>
-                    <Input placeholder="Nombre del album" name="name" onChange={ onChange } />
-                    <Dropdown type="dropdown" placeholder='Artista' name="artist" onChange={ onChange } lazyload fluid search selection options={ artists } />
-                    <Dropdown type="dropdown" placeholder='Genero' name="gender" onChange={ onChange } lazyload fluid search selection options={ genders } />
+                    <Input value={ formData.name } placeholder="Nombre del album" name="name" onChange={ onChange } />
+                    <Dropdown value={ formData.artist } type="dropdown" placeholder='Artista' name="artist" onChange={ onChange } lazyload fluid search selection options={ artists } />
+                    <Dropdown value={ formData.gender } type="dropdown" placeholder='Genero' name="gender" onChange={ onChange } lazyload fluid search selection options={ genders } />
                 </Form.Field>
             </Form.Group>
             <Button type='submit' loading={ loading }>Submit</Button>

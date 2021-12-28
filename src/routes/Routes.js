@@ -9,14 +9,14 @@ import Artists from '../pages/Artists';
 import Albumns from '../pages/Albums';
 import Album from '../pages/Album';
 
-const RouterComponent = ({ user, updateArtist, updateAlbum, setReloadApp }) => {
+const RouterComponent = ({ user, playerSong, updateArtist, updateAlbum, updateSong, setReloadApp }) => {
     return (
         <Routes>
-            <Route path="/" element={ <Home updateArtist={ updateArtist } updateAlbum={ updateAlbum } /> } />
-            <Route path="/artist/:id" element={ <Artist /> } />
+            <Route path="/" element={ <Home playerSong={ playerSong } updateSong={ updateSong } updateArtist={ updateArtist } updateAlbum={ updateAlbum } /> } />
+            <Route path="/artist/:id" element={ <Artist playerSong={ playerSong } /> } />
             <Route path="/artists" element={ <Artists /> } />
             <Route path="/albums" element={ <Albumns /> } />
-            <Route path="/album/:id" element={ <Album /> } />
+            <Route path="/album/:id" element={ <Album playerSong={ playerSong } /> } />
             <Route path="/settings" element={ <Settings setReloadApp={ setReloadApp } user={ user } /> } />
         </Routes>
     )

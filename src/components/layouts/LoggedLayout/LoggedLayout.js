@@ -12,13 +12,16 @@ import Player from '../../Player/Player';
 const Loggedlayout = ({ user, setReloadApp }) => {
     const [updateArtist, setUpdateArtist] = useState(false);
     const [updateAlbum, setUpdateAlbum] = useState(false);
+    const [updateSong, setUpdateSong] = useState(false);
     const [songData, setSongData] = useState(null);
 
-    const playerSong = (image, name, url) => {
+    const playerSong = (id, image, name, url, artist_name) => {
         setSongData({
+            id,
             image,
             name,
-            url
+            url,
+            artist_name
         });
     }
 
@@ -33,19 +36,16 @@ const Loggedlayout = ({ user, setReloadApp }) => {
             <Grid className="logged-layout">
                 <Grid.Row>
                     <Grid.Column width={ 3 }>
-                        <button onClick={ () => playerSong(song.image, song.name, song.url) }>
-                            Iniciar cancion
-                        </button>
-                        <Menuleft setUpdateArtist={ setUpdateArtist } setUpdateAlbum={ setUpdateAlbum } user={ user } />
+                        <Menuleft setUpdateSong={ setUpdateSong } setUpdateArtist={ setUpdateArtist } setUpdateAlbum={ setUpdateAlbum } user={ user } />
                     </Grid.Column>
                     <Grid.Column className="content" width={ 13 }>
                         <TopBar user={ user } />
-                        <RouterComponent updateArtist={ updateArtist } updateAlbum={ updateAlbum } user={ user } setReloadApp={ setReloadApp } />
+                        <RouterComponent playerSong={ playerSong } updateSong={ updateSong } updateArtist={ updateArtist } updateAlbum={ updateAlbum } user={ user } setReloadApp={ setReloadApp } />
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column width={ 16 }>
-                        <Player songData={ songData } />
+                        <Player playerSong={ playerSong } songData={ songData } />
                     </Grid.Column>
                 </  Grid.Row>
             </Grid>

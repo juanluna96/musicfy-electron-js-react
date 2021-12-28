@@ -7,13 +7,15 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 
 import './Album.scss'
+import ListSongs from '../../components/Songs/ListSongs';
 
 const db = firebase.firestore();
 
-const Album = () => {
+const Album = ({ playerSong }) => {
     const [album, setAlbum] = useState(null);
     const [banner, setBanner] = useState(null);
     const [artist, setArtist] = useState(null);
+    const [songs, setSongs] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -53,6 +55,24 @@ const Album = () => {
         }
     }, [album]);
 
+    // Get songs of the album
+    useEffect(() => {
+        if (album) {
+            const songsRef = db.collection('songs').where('album', '==', album.id);
+            songsRef.get().then(querySnapshot => {
+                const songs = [];
+                querySnapshot.forEach(doc => {
+                    const song = {
+                        id: doc.id,
+                        ...doc.data()
+                    };
+                    songs.push(song);
+                });
+                setSongs(songs);
+            });
+        }
+    }, [album]);
+
     if (!album || !artist || !banner) {
         return <Loader active >Cargando</Loader>
     }
@@ -63,7 +83,7 @@ const Album = () => {
                 <HeaderAlbum artist={ artist } album={ album } banner={ banner } />
             </div>
             <div className="album__songs">
-                Canciones
+                <ListSongs songs={ songs } artist={ artist } albumImage={ banner } playerSong={ playerSong } />
             </div>
         </div>
     )

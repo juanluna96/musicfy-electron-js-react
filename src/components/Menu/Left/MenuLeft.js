@@ -7,8 +7,9 @@ import AddArtistForm from '../../Artists/AddArtistForm';
 import "./MenuLeft.scss"
 import { isUserAdmin } from '../../../db/Firestore';
 import AddAlbumForm from '../../Albumns/AddAlbumnForm/AddAlbumForm';
+import AddSongForm from '../../Songs/AddSongForm';
 
-const Menuleft = ({ user, setUpdateArtist, setUpdateAlbum }) => {
+const Menuleft = ({ user, setUpdateArtist, setUpdateAlbum, setUpdateSong }) => {
     const location = useLocation()
 
     const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -28,9 +29,7 @@ const Menuleft = ({ user, setUpdateArtist, setUpdateAlbum }) => {
         },
         {
             title: 'Nueva canción',
-            content: <div>
-                <p>Nombre de la canción</p>
-            </div>,
+            content: <AddSongForm setUpdateSong={ setUpdateSong } setShowModal={ setShowModal } />
         }
     ]
 
