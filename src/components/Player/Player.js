@@ -150,7 +150,7 @@ const Player = ({ songData, playerSong }) => {
     }
 
     const secondsToMinutes = () => {
-        const formatted = moment.utc(totalSeconds * 1000).format('mm:ss');
+        const formatted = moment.utc((totalSeconds - playedSeconds) * 1000).format('mm:ss');
         return formatted;
     }
 

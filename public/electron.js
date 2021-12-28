@@ -8,11 +8,12 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 900,
-        height: 680,
+        width: 1500,
+        height: 1080,
         icon: "src/assets/img/png/logo-green.png",
-        // frame: false,
-        // titleBarStyle: 'hidden',
+        resizable: false,
+        titleBarStyle: "hiddenInset",
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
