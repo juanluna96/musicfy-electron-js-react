@@ -6,9 +6,9 @@ import * as colors from './TitleBarComponent.scss';
 const TitleBarComponent = () => {
     let options = {
         backgroundColor: "#101010",
-        iconsColor: "#9e9e9e",
+        iconsColor: "#8f8f8f",
         title: "Musicfy",
-        titleColor: "#9e9e9e",
+        titleColor: "#8f8f8f",
         icon: true,
         closeIconClass: "close icon",
         maximizeIconClass: "window maximize outline icon",

@@ -12,8 +12,8 @@ function createWindow() {
         height: 1080,
         icon: "src/assets/img/png/logo-green.png",
         resizable: false,
-        // frame: false,
-        // titleBarStyle: 'hidden',
+        titleBarStyle: "hiddenInset",
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,

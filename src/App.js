@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      {/* <TitleBarComponent /> */ }
+      <TitleBarComponent />
       { !user ? <Auth /> : <Loggedlayout setReloadApp={ setReloadApp } user={ user } /> }
       <ToastContainer
         position="top-center"

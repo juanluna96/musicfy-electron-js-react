@@ -5,7 +5,7 @@
     height: 100%;
     background-color: $background-gray-medium;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     flex-direction: column;
     .ui.grid {
@@ -14,7 +14,7 @@
     }
     .left {
         display: flex !important;
-        align-items: center;
+        align-items: flex-start;
         font-size: 16px;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
