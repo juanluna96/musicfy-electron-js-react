@@ -6,15 +6,15 @@ import BasicSliderItems from '../../components/Sliders/BasicSliderItems';
 import 'firebase/compat/firestore';
 
 import './Artist.scss';
+import SongsSlider from '../../components/Songs/SongsSlider';
 
 const db = firebase.firestore(firebase);
 
-const Artist = () => {
+const Artist = ({ playerSong }) => {
     const { id } = useParams();
     const [artist, setArtist] = useState(null);
     const [albums, setAlbums] = useState([]);
     const [songs, setSongs] = useState([])
-    console.log(songs)
 
     useEffect(() => {
         db.collection('artists').doc(id).get().then(doc => {
@@ -52,7 +52,7 @@ const Artist = () => {
             }))
             setSongs(arraySongs);
         })();
-    }, [artist]);
+    }, [albums]);
 
     return (
         <div className="artist">
@@ -70,7 +70,10 @@ const Artist = () => {
                     </div>
                 </>
             }
-            <h2>Mas informacion...</h2>
+            {
+                songs &&
+                <SongsSlider title={ `Canciones de ${artist?.name}` } data={ songs } playerSong={ playerSong } />
+            }
         </div>
     )
 }

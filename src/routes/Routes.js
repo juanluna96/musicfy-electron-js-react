@@ -13,7 +13,7 @@ const RouterComponent = ({ user, playerSong, updateArtist, updateAlbum, updateSo
     return (
         <Routes>
             <Route path="/" element={ <Home playerSong={ playerSong } updateSong={ updateSong } updateArtist={ updateArtist } updateAlbum={ updateAlbum } /> } />
-            <Route path="/artist/:id" element={ <Artist /> } />
+            <Route path="/artist/:id" element={ <Artist playerSong={ playerSong } /> } />
             <Route path="/artists" element={ <Artists /> } />
             <Route path="/albums" element={ <Albumns /> } />
             <Route path="/album/:id" element={ <Album /> } />
