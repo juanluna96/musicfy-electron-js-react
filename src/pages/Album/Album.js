@@ -14,6 +14,7 @@ const Album = () => {
     const [album, setAlbum] = useState(null);
     const [banner, setBanner] = useState(null);
     const [artist, setArtist] = useState(null);
+    const [songs, setSongs] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -52,6 +53,25 @@ const Album = () => {
             });
         }
     }, [album]);
+
+    // Get songs of the album
+    useEffect(() => {
+        if (album) {
+            const songsRef = db.collection('songs').where('album', '==', album.id);
+            songsRef.get().then(querySnapshot => {
+                const songs = [];
+                querySnapshot.forEach(doc => {
+                    const song = {
+                        id: doc.id,
+                        ...doc.data()
+                    };
+                    songs.push(song);
+                });
+                setSongs(songs);
+            });
+        }
+    }, [album]);
+    console.log(songs);
 
     if (!album || !artist || !banner) {
         return <Loader active >Cargando</Loader>
