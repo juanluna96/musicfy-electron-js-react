@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid } from 'semantic-ui-react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import "./Loggedlayout.scss"
 
@@ -32,7 +32,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
     }
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Grid className="logged-layout">
                 <Grid.Row>
                     <Grid.Column width={ 3 }>
@@ -49,7 +49,7 @@ const Loggedlayout = ({ user, setReloadApp }) => {
                     </Grid.Column>
                 </  Grid.Row>
             </Grid>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 

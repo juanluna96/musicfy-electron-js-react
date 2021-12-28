@@ -67,12 +67,9 @@ const Artist = ({ playerSong }) => {
                             folder="albums"
                             path="album"
                         />
+                        <SongsSlider title={ `Canciones de ${artist?.name}` } data={ songs } playerSong={ playerSong } />
                     </div>
                 </>
-            }
-            {
-                songs &&
-                <SongsSlider title={ `Canciones de ${artist?.name}` } data={ songs } playerSong={ playerSong } />
             }
         </div>
     )

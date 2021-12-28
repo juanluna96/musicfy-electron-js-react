@@ -12,7 +12,6 @@ import { Icon } from 'semantic-ui-react';
 const db = firebase.firestore();
 
 const SongsSlider = ({ playerSong, title, data }) => {
-    console.log(data);
     const settings = {
         dots: false,
         infinite: data.length > 4,
