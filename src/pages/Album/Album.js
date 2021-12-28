@@ -11,7 +11,7 @@ import ListSongs from '../../components/Songs/ListSongs';
 
 const db = firebase.firestore();
 
-const Album = () => {
+const Album = ({ playerSong }) => {
     const [album, setAlbum] = useState(null);
     const [banner, setBanner] = useState(null);
     const [artist, setArtist] = useState(null);
@@ -83,7 +83,7 @@ const Album = () => {
                 <HeaderAlbum artist={ artist } album={ album } banner={ banner } />
             </div>
             <div className="album__songs">
-                <ListSongs songs={ songs } albumImage={ banner } />
+                <ListSongs songs={ songs } artist={ artist } albumImage={ banner } playerSong={ playerSong } />
             </div>
         </div>
     )

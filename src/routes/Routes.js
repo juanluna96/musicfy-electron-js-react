@@ -16,7 +16,7 @@ const RouterComponent = ({ user, playerSong, updateArtist, updateAlbum, updateSo
             <Route path="/artist/:id" element={ <Artist playerSong={ playerSong } /> } />
             <Route path="/artists" element={ <Artists /> } />
             <Route path="/albums" element={ <Albumns /> } />
-            <Route path="/album/:id" element={ <Album /> } />
+            <Route path="/album/:id" element={ <Album playerSong={ playerSong } /> } />
             <Route path="/settings" element={ <Settings setReloadApp={ setReloadApp } user={ user } /> } />
         </Routes>
     )
