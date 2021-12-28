@@ -11,6 +11,7 @@ function createWindow() {
         width: 1500,
         height: 1080,
         icon: "src/assets/img/png/logo-green.png",
+        resizable: false,
         // frame: false,
         // titleBarStyle: 'hidden',
         webPreferences: {
