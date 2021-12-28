@@ -18,18 +18,24 @@ const ListSongs = ({ songs, albumImage }) => {
             <Table.Body>
                 {
                     songs.map(song => (
-                        <Table.Row key={ song.id }>
-                            <Table.Cell collapsing>
-                                <Icon name="play circle outline" />
-                            </Table.Cell>
-                            <Table.Cell>
-                                { song.name }
-                            </Table.Cell>
-                        </Table.Row>
+                        <Song key={ song.id } song={ song } albumImage={ albumImage } />
                     ))
                 }
             </Table.Body>
         </Table>
+    )
+}
+
+const Song = ({ song, albumImage }) => {
+    return (
+        <Table.Row >
+            <Table.Cell collapsing>
+                <Icon name="play circle outline" />
+            </Table.Cell>
+            <Table.Cell>
+                { song.name }
+            </Table.Cell>
+        </Table.Row>
     )
 }
 
