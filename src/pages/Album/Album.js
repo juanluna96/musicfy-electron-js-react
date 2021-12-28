@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 
 import './Album.scss'
+import ListSongs from '../../components/Songs/ListSongs';
 
 const db = firebase.firestore();
 
@@ -71,7 +72,6 @@ const Album = () => {
             });
         }
     }, [album]);
-    console.log(songs);
 
     if (!album || !artist || !banner) {
         return <Loader active >Cargando</Loader>
@@ -83,7 +83,7 @@ const Album = () => {
                 <HeaderAlbum artist={ artist } album={ album } banner={ banner } />
             </div>
             <div className="album__songs">
-                Canciones
+                <ListSongs songs={ songs } albumImage={ banner } />
             </div>
         </div>
     )
